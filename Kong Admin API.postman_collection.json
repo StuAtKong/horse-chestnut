@@ -6,10 +6,60 @@
 	},
 	"item": [
 		{
+			"name": "Routes",
+			"item": [
+				{
+					"name": "Get Routes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Route",
+									"jsonResponse.data.forEach(function (routeDetails) {",
+									"    ",
+									"    ",
+									"    if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"      console.log('Route: ' + routeDetails.id);",
+									"    }",
+									"",
+									"  postman.setEnvironmentVariable(\"route_\"+routeDetails.id, routeDetails.id);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/routes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"routes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Services",
 			"item": [
 				{
-					"name": "Get Services",
+					"name": "Get All Services",
 					"event": [
 						{
 							"listen": "test",
@@ -18,10 +68,12 @@
 								"exec": [
 									"var jsonResponse = JSON.parse(responseBody);",
 									"",
-									"// Create a Postman env variable for each CH app\",",
+									"// Create a Postman env variable for each Service",
 									"jsonResponse.data.forEach(function (serviceDetails) {",
-									"  console.log('Service: ' + serviceDetails.domain);",
-									"  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.name);",
+									"  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"    console.log('Service: ' + serviceDetails.domain);",
+									"  }",
+									"  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);",
 									"})",
 									"",
 									""
@@ -51,6 +103,49 @@
 					"response": []
 				},
 				{
+					"name": "Get Service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "26f388f3-f2a3-49e6-a05e-4572d722ca06",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"//jsonResponse.data.forEach(function (serviceDetails) {",
+									"//  console.log('Service: ' + serviceDetails.domain);",
+									"//  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);",
+									"//})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/services/{{service_echo-service}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"services",
+								"{{service_echo-service}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create Service",
 					"event": [
 						{
@@ -60,11 +155,9 @@
 								"exec": [
 									"var jsonResponse = JSON.parse(responseBody);",
 									"",
-									"// Create a Postman env variable for each CH app\",",
-									"//jsonResponse.data.forEach(function (serviceDetails) {",
-									"//  console.log('Service: ' + serviceDetails.domain);",
-									"//  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.name);",
-									"//})",
+									"// Create a Postman env variable for the service",
+									"//console.log('Service: ' + jsonResponse.name);",
+									"postman.setEnvironmentVariable(\"service_\"+ jsonResponse.name, jsonResponse.name);",
 									"",
 									""
 								],
@@ -78,34 +171,13 @@
 							{
 								"key": "Content-Type",
 								"name": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
+								"value": "application/json",
 								"type": "text"
 							}
 						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "httpbin",
-									"type": "text"
-								},
-								{
-									"key": "protocol",
-									"value": "http",
-									"type": "text"
-								},
-								{
-									"key": "host",
-									"value": "10.0.10.1",
-									"type": "text"
-								},
-								{
-									"key": "port",
-									"value": "80",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": "{\n   \"host\":\"10.0.10.1\",\n   \"connect_timeout\":60000,\n   \"protocol\":\"http\",\n   \"name\":\"temp\",\n   \"read_timeout\":60000,\n   \"port\":80,\n   \"path\":\"/status/500\",\n   \"retries\":5,\n   \"write_timeout\":60000\n}"
 						},
 						"url": {
 							"raw": "{{baseURL}}:{{adminPort}}/services",
@@ -119,14 +191,94 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Update service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"host\":\"10.0.10.1\",\n   \"connect_timeout\":60000,\n   \"protocol\":\"http\",\n   \"name\":\"temp\",\n   \"read_timeout\":60000,\n   \"port\":80,\n   \"path\":\"/status/200\",\n   \"retries\":5,\n   \"write_timeout\":60000\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/services/{{service_temp}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"services",
+								"{{service_temp}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									"//Delete the service name env variable",
+									"var serviceName = (pm.request.url.path[pm.request.url.path.length -1]);",
+									"postman.clearEnvironmentVariable(\"service_\" + serviceName);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/services/{{service_temp}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"services",
+								"{{service_temp}}"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
 		{
-			"name": "Routes",
+			"name": "Plugins",
 			"item": [
 				{
-					"name": "Get Routes",
+					"name": "Get All Plugins",
 					"event": [
 						{
 							"listen": "test",
@@ -136,9 +288,9 @@
 									"var jsonResponse = JSON.parse(responseBody);",
 									"",
 									"// Create a Postman env variable for each CH app\",",
-									"jsonResponse.data.forEach(function (routeDetails) {",
-									"  console.log('Route: ' + routeDetails.domain);",
-									"  postman.setEnvironmentVariable(\"route_\"+routeDetails.id, routeDetails.id);",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
 									"})"
 								],
 								"type": "text/javascript"
@@ -153,13 +305,105 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/routes",
+							"raw": "{{baseURL}}:{{adminPort}}/plugins",
 							"host": [
 								"{{baseURL}}"
 							],
 							"port": "{{adminPort}}",
 							"path": [
-								"routes"
+								"plugins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Plugin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"/*",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/plugins/{{plugin_31f0fb93-9b75-4452-b829-b6ec30ceef4d}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"plugins",
+								"{{plugin_31f0fb93-9b75-4452-b829-b6ec30ceef4d}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Plugin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"/*",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"config\": {\n        \"strategy\": \"cluster\",\n        \"window_type\": \"sliding\",\n        \"hide_client_headers\": false,\n        \"window_size\": [\n            10\n        ],\n        \"sync_rate\": 5,\n        \"namespace\": \"Kh5o6J1XEQX6PiB4gy4FgDwDijeuKLK9\",\n        \"identifier\": \"ip\",\n        \"dictionary_name\": \"kong_rate_limiting_counters\",\n        \"limit\": [\n            3\n        ]\n    },\n    \"name\": \"rate-limiting-advanced\",\n    \"enabled\": false,\n    \"route_id\": \"1bd6788b-8418-4c59-bcda-21c027cb8fde\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/plugins/{{plugin_31f0fb93-9b75-4452-b829-b6ec30ceef4d}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"plugins",
+								"{{plugin_31f0fb93-9b75-4452-b829-b6ec30ceef4d}}"
 							]
 						}
 					},
