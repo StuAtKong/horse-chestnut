@@ -193,6 +193,48 @@
 					"response": []
 				},
 				{
+					"name": "Create/Update Service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"host\":\"10.0.10.1\",\n   \"connect_timeout\":60000,\n   \"protocol\":\"http\",\n   \"name\":\"temp\",\n   \"read_timeout\":60000,\n   \"port\":80,\n   \"path\":\"/status/200\",\n   \"retries\":5,\n   \"write_timeout\":60000\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/services/{{service_temp}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"services",
+								"{{service_temp}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update service",
 					"event": [
 						{
@@ -361,6 +403,57 @@
 					"response": []
 				},
 				{
+					"name": "Add Plugin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"/*",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\"name\": \"cors\", \n\"config\": { \n  \"credentials\": null, \n  \"preflight_continue\": null \n  } \n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/services/{{service_temp}}/plugins/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"services",
+								"{{service_temp}}",
+								"plugins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update Plugin",
 					"event": [
 						{
@@ -393,17 +486,380 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"config\": {\n        \"strategy\": \"cluster\",\n        \"window_type\": \"sliding\",\n        \"hide_client_headers\": false,\n        \"window_size\": [\n            10\n        ],\n        \"sync_rate\": 5,\n        \"namespace\": \"Kh5o6J1XEQX6PiB4gy4FgDwDijeuKLK9\",\n        \"identifier\": \"ip\",\n        \"dictionary_name\": \"kong_rate_limiting_counters\",\n        \"limit\": [\n            3\n        ]\n    },\n    \"name\": \"rate-limiting-advanced\",\n    \"enabled\": false,\n    \"route_id\": \"1bd6788b-8418-4c59-bcda-21c027cb8fde\"\n}"
+							"raw": "{ \n\"name\": \"cors\", \n\"config\": { \n  \"credentials\": null, \n  \"preflight_continue\": null \n  } \n}"
 						},
 						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/plugins/{{plugin_31f0fb93-9b75-4452-b829-b6ec30ceef4d}}",
+							"raw": "{{baseURL}}:{{adminPort}}/plugins/{{plugin_6e9b5b5c-e36d-4bfc-bac6-5b05b53f8b8a}}",
 							"host": [
 								"{{baseURL}}"
 							],
 							"port": "{{adminPort}}",
 							"path": [
 								"plugins",
-								"{{plugin_31f0fb93-9b75-4452-b829-b6ec30ceef4d}}"
+								"{{plugin_6e9b5b5c-e36d-4bfc-bac6-5b05b53f8b8a}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Certificates",
+			"item": [
+				{
+					"name": "Get Certificates",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/certificates",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"certificates"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Workspaces",
+			"item": [
+				{
+					"name": "Get Workspaces",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each workspace,",
+									"jsonResponse.data.forEach(function (workspaceDetails) {",
+									"  console.log('Workspace: ' + workspaceDetails.domain);",
+									"  postman.setEnvironmentVariable(\"workspace_\"+workspaceDetails.name, workspaceDetails.id);",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/workspaces",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"workspaces"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Workspace Metadata",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each workspace,",
+									"/*",
+									"jsonResponse.data.forEach(function (workspaceDetails) {",
+									"  console.log('Workspace: ' + workspaceDetails.domain);",
+									"  postman.setEnvironmentVariable(\"workspace_\"+workspaceDetails.name, workspaceDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/workspaces/{{workspace_newWorkspace}}/meta",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"workspaces",
+								"{{workspace_newWorkspace}}",
+								"meta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Workspace Entities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each workspace,",
+									"/*",
+									"jsonResponse.data.forEach(function (workspaceDetails) {",
+									"  console.log('Workspace: ' + workspaceDetails.domain);",
+									"  postman.setEnvironmentVariable(\"workspace_\"+workspaceDetails.name, workspaceDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/workspaces/{{workspace_newWorkspace}}/entities",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"workspaces",
+								"{{workspace_newWorkspace}}",
+								"entities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Workspace Files",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each workspace,",
+									"/*",
+									"jsonResponse.data.forEach(function (workspaceDetails) {",
+									"  console.log('Workspace: ' + workspaceDetails.domain);",
+									"  postman.setEnvironmentVariable(\"workspace_\"+workspaceDetails.name, workspaceDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/workspaces/newWorkspace/files",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"workspaces",
+								"newWorkspace",
+								"files"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Workspace",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for the workspace",
+									"console.log('Workspace: ' + jsonResponse.name);",
+									"postman.setEnvironmentVariable(\"workspace_\"+jsonResponse.name, jsonResponse.id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"newWorkspace\"\n}\n"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/workspaces",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"workspaces"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Workspace",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"//var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"/*",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/workspaces/{{workspace_newWorkspace}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"workspaces",
+								"{{workspace_newWorkspace}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Workspace (file entities)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"jsonResponse.data.forEach(function (entityDetails) {",
+									"",
+									"    if (entityDetails.entity_type == \"files\" & entityDetails.unique_field_name == \"id\") {",
+									"",
+									"        var filesEntityUrl = postman.getEnvironmentVariable('baseURL') + ':' +postman.getEnvironmentVariable('adminPort') + '/newWorkspace/files/' + entityDetails.entity_id;",
+									"",
+									"        console.log('DELETE file : ' + filesEntityUrl);",
+									"    ",
+									"        pm.sendRequest({",
+									"            url: filesEntityUrl,",
+									"            method: 'DELETE',",
+									"        }, function (err, res) {",
+									"            console.log(res);",
+									"        });",
+									"",
+									"    }",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/workspaces/{{workspace_newWorkspace}}/entities",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"workspaces",
+								"{{workspace_newWorkspace}}",
+								"entities"
 							]
 						}
 					},
