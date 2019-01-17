@@ -35,7 +35,13 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -47,6 +53,72 @@
 							],
 							"port": "{{adminPort}}",
 							"path": [
+								"routes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Route",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "protocols[]",
+									"value": "http",
+									"type": "text"
+								},
+								{
+									"key": "methods",
+									"value": "GET",
+									"type": "text"
+								},
+								{
+									"key": "methods",
+									"value": "POST",
+									"type": "text"
+								},
+								{
+									"key": "methods",
+									"value": "DELETE",
+									"type": "text"
+								},
+								{
+									"key": "paths[]",
+									"value": "/comment/\\S+",
+									"type": "text"
+								},
+								{
+									"key": "strip_path",
+									"value": "false",
+									"type": "text"
+								},
+								{
+									"key": "preserve_host",
+									"value": "true",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/services/{{service_temp}}/routes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"services",
+								"{{service_temp}}",
 								"routes"
 							]
 						}
@@ -84,7 +156,13 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -126,20 +204,26 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/services/{{service_echo-service}}",
+							"raw": "{{baseURL}}:{{adminPort}}/services/{{service_temp}}",
 							"host": [
 								"{{baseURL}}"
 							],
 							"port": "{{adminPort}}",
 							"path": [
 								"services",
-								"{{service_echo-service}}"
+								"{{service_temp}}"
 							]
 						}
 					},
@@ -172,6 +256,11 @@
 								"key": "Content-Type",
 								"name": "Content-Type",
 								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
 								"type": "text"
 							}
 						],
@@ -309,6 +398,233 @@
 							"path": [
 								"services",
 								"{{service_temp}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Upstreams",
+			"item": [
+				{
+					"name": "Get Upstreams",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8c973721-390d-4fd6-a9fe-a8c24b4bd625",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Route",
+									"jsonResponse.data.forEach(function (upstreamDetails) {",
+									"    ",
+									"  console.log('Route: ' + upstreamDetails.name);",
+									"",
+									"  postman.setEnvironmentVariable(\"upstream_\"+upstreamDetails.name, upstreamDetails.id);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/upstreams",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"upstreams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Upstream",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/upstreams/{{upstream_upstream-B}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"upstreams",
+								"{{upstream_upstream-B}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Upstream Targets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e7ea5d0e-5ec5-43b7-8555-abeda3784f02",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Route",
+									"jsonResponse.data.forEach(function (targetDetails) {",
+									"    ",
+									"  console.log('Route: ' + targetDetails.target);",
+									"",
+									"  postman.setEnvironmentVariable(\"target_\"+targetDetails.target, targetDetails.id);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/upstreams/{{upstream_upstream-B}}/targets",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"upstreams",
+								"{{upstream_upstream-B}}",
+								"targets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Upstream Target",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/upstreams/{{upstream_upstream-B}}/targets/2fb3ff88-284a-4031-8967-6c5b7679b8d4",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"upstreams",
+								"{{upstream_upstream-B}}",
+								"targets",
+								"2fb3ff88-284a-4031-8967-6c5b7679b8d4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set Upstream Target Healthy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"type": "text",
+								"value": "{{adminToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/upstreams/{{upstream_upstream-B}}/targets/{{target_host-b.local:80}}/healthy",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"upstreams",
+								"{{upstream_upstream-B}}",
+								"targets",
+								"{{target_host-b.local:80}}",
+								"healthy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set Upstream Target Unhealthy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"type": "text",
+								"value": "{{adminToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/upstreams/{{upstream_upstream-B}}/targets/{{target_host-b.local:80}}/unhealthy",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"upstreams",
+								"{{upstream_upstream-B}}",
+								"targets",
+								"{{target_host-b.local:80}}",
+								"unhealthy"
 							]
 						}
 					},
@@ -860,6 +1176,386 @@
 								"workspaces",
 								"{{workspace_newWorkspace}}",
 								"entities"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dev Portal",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"stu.roberts+dp1@konghq.com\",\n \"password\":\"abc\",\n  \"meta\":\"{\\\"full_name\\\":\\\"ss\\\"}\"}"
+						},
+						"url": {
+							"raw": "http://10.0.10.1:8004/register",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"10",
+								"1"
+							],
+							"port": "8004",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RBAC",
+			"item": [
+				{
+					"name": "Get Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Service",
+									"jsonResponse.data.forEach(function (serviceDetails) {",
+									"  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"    console.log('Service: ' + serviceDetails.domain);",
+									"  }",
+									"  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/rbac/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"rbac",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/rbac/users/stu/roles",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"rbac",
+								"users",
+								"stu",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Service",
+									"jsonResponse.data.forEach(function (serviceDetails) {",
+									"  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"    console.log('Service: ' + serviceDetails.domain);",
+									"  }",
+									"  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"stu\"}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/rbac/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"rbac",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "U44cNo1K9iUTdQek29tbKrWq5yTepUL8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"myadmin\"}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/rbac/users/myadmin",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"rbac",
+								"users",
+								"myadmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Service",
+									"jsonResponse.data.forEach(function (serviceDetails) {",
+									"  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"    console.log('Service: ' + serviceDetails.domain);",
+									"  }",
+									"  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"roles\":\"super-admin\"}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/rbac/users/stu/roles",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"rbac",
+								"users",
+								"stu",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Admins",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/admins",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"admins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Admin User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"myadmin\",\n \"email\":\"stu.roberts@konghq.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/admins",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"admins"
 							]
 						}
 					},
