@@ -657,7 +657,13 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -885,7 +891,13 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -1195,24 +1207,110 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"type": "text"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"email\":\"stu.roberts+dp1@konghq.com\",\n \"password\":\"abc\",\n  \"meta\":\"{\\\"full_name\\\":\\\"ss\\\"}\"}"
+							"raw": "{\"email\":\"stu.roberts+achassin@konghq.com\",\n \"password\":\"duopolist\",\n \"meta\":\"{\\\"full_name\\\":\\\"Ashley Chassin\\\"}\"\n}"
 						},
 						"url": {
-							"raw": "http://10.0.10.1:8004/register",
-							"protocol": "http",
+							"raw": "{{baseURL}}:{{portalAPIPort}}/testabc/register",
 							"host": [
-								"10",
-								"0",
-								"10",
-								"1"
+								"{{baseURL}}"
 							],
-							"port": "8004",
+							"port": "{{portalAPIPort}}",
 							"path": [
+								"testabc",
 								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Portal Developers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/testabc/portal/developers",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"testabc",
+								"portal",
+								"developers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Developer Portal Account",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"type\": 1, \n \"status\": 0}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/testabc/portal/developers/8cc6260b-c993-42e2-948a-3dc1db8bb2e6",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"testabc",
+								"portal",
+								"developers",
+								"8cc6260b-c993-42e2-948a-3dc1db8bb2e6"
 							]
 						}
 					},
