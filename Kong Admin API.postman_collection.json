@@ -1216,7 +1216,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"email\":\"stu.roberts+achassin@konghq.com\",\n \"password\":\"duopolist\",\n \"meta\":\"{\\\"full_name\\\":\\\"Ashley Chassin\\\"}\"\n}"
+							"raw": "{\"email\":\"stu.roberts+ahall@konghq.com\",\n \"password\":\"slater\",\n \"meta\":\"{\\\"full_name\\\":\\\"\\\"}\"\n}"
 						},
 						"url": {
 							"raw": "{{baseURL}}:{{portalAPIPort}}/testabc/register",
@@ -1298,10 +1298,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"type\": 1, \n \"status\": 0}"
+							"raw": "{\"type\": 1, \n \"status\": 0,\n \"meta\":\"{\\\"full_name\\\":\\\"\\\"}\"\n}"
 						},
 						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/testabc/portal/developers/8cc6260b-c993-42e2-948a-3dc1db8bb2e6",
+							"raw": "{{baseURL}}:{{adminPort}}/testabc/portal/developers/db04cae6-3c0e-46d5-afeb-8508223b587e",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -1310,7 +1310,7 @@
 								"testabc",
 								"portal",
 								"developers",
-								"8cc6260b-c993-42e2-948a-3dc1db8bb2e6"
+								"db04cae6-3c0e-46d5-afeb-8508223b587e"
 							]
 						}
 					},
@@ -1321,6 +1321,49 @@
 		{
 			"name": "RBAC",
 			"item": [
+				{
+					"name": "Get User Info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/userinfo",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"userinfo"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "Get Users",
 					"event": [
@@ -1654,6 +1697,532 @@
 							"port": "{{adminPort}}",
 							"path": [
 								"admins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Admin User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/admins/super",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"admins",
+								"super"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OAuth Demo",
+			"item": [
+				{
+					"name": "Add Service",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "mock-service",
+									"type": "text"
+								},
+								{
+									"key": "url",
+									"value": "http://mockbin.org/request",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/services",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Route",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "hosts[]",
+									"value": "mockbin.org",
+									"type": "text"
+								},
+								{
+									"key": "paths[]",
+									"value": "/mock",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/services/mock-service/routes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"services",
+								"mock-service",
+								"routes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Call API",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Host",
+								"value": "mockbin.org"
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer BjQMIzf2cgzZnGb0IwZillsgWhOxkTmb",
+								"type": "text"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://127.0.0.1:8000/mock",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"mock"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add OAuth2 Plugin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "oauth2",
+									"type": "text"
+								},
+								{
+									"key": "config.scopes",
+									"value": "email, phone, address",
+									"type": "text"
+								},
+								{
+									"key": "config.mandatory_scope",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "config.enable_authorization_code",
+									"value": "true",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/services/mock-service/plugins/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"services",
+								"mock-service",
+								"plugins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Consumer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "thefosk",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/consumers/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"consumers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create OAuth2 Application",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Hello World App",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://konghq.com/",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/consumers/thefosk/oauth2/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"consumers",
+								"thefosk",
+								"oauth2",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get OAuth2 Apps",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"client_id\":\"viJ8dMD6rCpk27olm0kBvoL36JIunsph\"}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/oauth2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"oauth2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Access Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Host",
+								"value": "mockbin.org"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "viJ8dMD6rCpk27olm0kBvoL36JIunsph",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "Aq2U7Sz6UCsLs9IWA17xNWQPnWPWFPHw",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://konghq.com/",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "qKS9j2tl3ANzzAs1mlU9SvocS1f3GAuH",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://127.0.0.1:8443/mock/oauth2/token",
+							"protocol": "https",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8443",
+							"path": [
+								"mock",
+								"oauth2",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OIDC",
+			"item": [
+				{
+					"name": "Get All Issuers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/openid-connect/issuers/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"openid-connect",
+								"issuers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Issuer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"type": "text",
+								"value": "{{adminToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/openid-connect/issuers/70530c44-ef6d-40a7-8cef-bec5b63d6ddf",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"openid-connect",
+								"issuers",
+								"70530c44-ef6d-40a7-8cef-bec5b63d6ddf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Issuer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"type": "text",
+								"value": "{{adminToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/openid-connect/issuers/70530c44-ef6d-40a7-8cef-bec5b63d6ddf",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"openid-connect",
+								"issuers",
+								"70530c44-ef6d-40a7-8cef-bec5b63d6ddf"
 							]
 						}
 					},

@@ -1,0 +1,164 @@
+{
+	"info": {
+		"_postman_id": "4fa8c164-34e7-41e4-a61b-71be93a66ae1",
+		"name": "Toxiproxy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Proxies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8474/proxies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8474",
+					"path": [
+						"proxies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Proxy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8474/proxies/cisco_postgres",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8474",
+					"path": [
+						"proxies",
+						"cisco_postgres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Proxy",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8474/proxies/cisco_postgres",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8474",
+					"path": [
+						"proxies",
+						"cisco_postgres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Proxy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"cisco_postgres\",\n    \"listen\": \"0.0.0.0:15432\",\n    \"upstream\": \"10.0.10.1:5432\",\n    \"enabled\": true\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8474/proxies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8474",
+					"path": [
+						"proxies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Proxy Toxics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8474/proxies/cisco_postgres",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8474",
+					"path": [
+						"proxies",
+						"cisco_postgres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Toxic",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"name\":\"latency_downstream\",\n   \"type\":\"latency\",\n   \"stream\":\"downstream\",\n   \"toxicity\":1,\n   \"attributes\":{\n      \"latency\":200,\n      \"jitter\":0\n   }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8474/proxies/cisco_postgres/toxics",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8474",
+					"path": [
+						"proxies",
+						"cisco_postgres",
+						"toxics"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
