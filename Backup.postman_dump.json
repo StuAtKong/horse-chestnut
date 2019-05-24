@@ -1,0 +1,3540 @@
+{
+	"version": 1,
+	"collections": [
+		{
+			"id": "4fa8c164-34e7-41e4-a61b-71be93a66ae1",
+			"name": "Toxiproxy",
+			"description": "https://github.com/Shopify/toxiproxy",
+			"auth": null,
+			"events": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2ec0fe1d-4e0c-4b04-b2a6-d0377de894d9",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "68fc246e-b4c5-4fdc-b004-64e55c07b4e7",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"variables": [],
+			"order": [
+				"cbea3abb-98bd-4fad-83c8-8e0c10f97195",
+				"36945135-a3e7-4b9c-9eba-0ab51f2cb098",
+				"78a7f89f-0977-469a-a2a4-28dac21900d3",
+				"664cd834-605c-4d04-834f-fbb0032740b2",
+				"72a69578-6c00-449e-8614-c77217bfb6a0",
+				"05241a5b-c717-4bf2-88a5-57e050eef06c",
+				"d379edb3-fb11-475e-891b-dff9cb7c657f",
+				"d5124e1a-4ecf-4023-a7aa-f944a79721d1",
+				"7eb7de10-93dd-4637-aefe-4aca7308da1e",
+				"c0791d83-d7b2-4496-bc4a-3ccdb04bced7",
+				"73437b5a-f5d0-493c-bc5b-68fb63f6532f"
+			],
+			"folders_order": [],
+			"folders": [],
+			"requests": [
+				{
+					"id": "05241a5b-c717-4bf2-88a5-57e050eef06c",
+					"name": "Delete Proxy",
+					"url": "http://localhost:8474/proxies/cisco_postgres",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": null,
+					"method": "DELETE",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "4fa8c164-34e7-41e4-a61b-71be93a66ae1",
+					"pathVariables": {}
+				},
+				{
+					"id": "36945135-a3e7-4b9c-9eba-0ab51f2cb098",
+					"name": "Reset",
+					"url": "http://localhost:8474/reset",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "4fa8c164-34e7-41e4-a61b-71be93a66ae1",
+					"rawModeData": "{\n   \"name\":\"latency_downstream\",\n   \"type\":\"latency\",\n   \"stream\":\"downstream\",\n   \"toxicity\":1,\n   \"attributes\":{\n      \"latency\":150,\n      \"jitter\":0\n   }\n}",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "664cd834-605c-4d04-834f-fbb0032740b2",
+					"name": "Get Proxy",
+					"url": "http://localhost:8474/proxies/cisco_postgres",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "4fa8c164-34e7-41e4-a61b-71be93a66ae1",
+					"pathVariables": {}
+				},
+				{
+					"id": "72a69578-6c00-449e-8614-c77217bfb6a0",
+					"name": "Create Proxy",
+					"url": "http://localhost:8474/proxies",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "4fa8c164-34e7-41e4-a61b-71be93a66ae1",
+					"rawModeData": "{\n    \"name\": \"cisco_postgres\",\n    \"listen\": \"0.0.0.0:15432\",\n    \"upstream\": \"10.0.10.1:5432\",\n    \"enabled\": true\n}",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "73437b5a-f5d0-493c-bc5b-68fb63f6532f",
+					"name": "Delete Toxic",
+					"url": "http://localhost:8474/proxies/cisco_postgres/toxics/latency_downstream",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "DELETE",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "4fa8c164-34e7-41e4-a61b-71be93a66ae1",
+					"rawModeData": "{\n   \"name\":\"latency_downstream\",\n   \"type\":\"latency\",\n   \"stream\":\"downstream\",\n   \"toxicity\":1,\n   \"attributes\":{\n      \"latency\":200,\n      \"jitter\":0\n   }\n}",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "78a7f89f-0977-469a-a2a4-28dac21900d3",
+					"name": "Get All Proxies",
+					"url": "http://localhost:8474/proxies",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "4fa8c164-34e7-41e4-a61b-71be93a66ae1",
+					"pathVariables": {}
+				},
+				{
+					"id": "7eb7de10-93dd-4637-aefe-4aca7308da1e",
+					"name": "Create Toxic",
+					"url": "http://localhost:8474/proxies/cisco_postgres/toxics",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "4fa8c164-34e7-41e4-a61b-71be93a66ae1",
+					"rawModeData": "{\n   \"name\":\"latency_downstream\",\n   \"type\":\"latency\",\n   \"stream\":\"downstream\",\n   \"toxicity\":1,\n   \"attributes\":{\n      \"latency\":150,\n      \"jitter\":0\n   }\n}",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "c0791d83-d7b2-4496-bc4a-3ccdb04bced7",
+					"name": "Update Toxic",
+					"url": "http://localhost:8474/proxies/cisco_postgres/toxics/latency_downstream",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "4fa8c164-34e7-41e4-a61b-71be93a66ae1",
+					"rawModeData": "{\n   \"name\":\"latency_downstream\",\n   \"type\":\"latency\",\n   \"stream\":\"downstream\",\n   \"toxicity\":1,\n   \"attributes\":{\n      \"latency\":500,\n      \"jitter\":0\n   }\n}",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "cbea3abb-98bd-4fad-83c8-8e0c10f97195",
+					"name": "Get Version",
+					"url": "http://localhost:8474/version",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "4fa8c164-34e7-41e4-a61b-71be93a66ae1",
+					"pathVariables": {}
+				},
+				{
+					"id": "d379edb3-fb11-475e-891b-dff9cb7c657f",
+					"name": "Get Proxy Toxics",
+					"url": "http://localhost:8474/proxies/cisco_postgres",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "4fa8c164-34e7-41e4-a61b-71be93a66ae1",
+					"pathVariables": {}
+				},
+				{
+					"id": "d5124e1a-4ecf-4023-a7aa-f944a79721d1",
+					"name": "Get Toxic",
+					"url": "http://localhost:8474/proxies/cisco_postgres/toxics/latency_downstream",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "4fa8c164-34e7-41e4-a61b-71be93a66ae1",
+					"rawModeData": "{\n   \"name\":\"latency_downstream\",\n   \"type\":\"latency\",\n   \"stream\":\"downstream\",\n   \"toxicity\":1,\n   \"attributes\":{\n      \"latency\":200,\n      \"jitter\":0\n   }\n}",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				}
+			]
+		},
+		{
+			"id": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+			"name": "Kong Admin API",
+			"description": null,
+			"auth": null,
+			"events": null,
+			"variables": [],
+			"order": [
+				"30ed82ae-d211-434b-a5ef-8cd7a333dd40",
+				"b54b3341-1374-4787-a824-899edd1972a9",
+				"8484ca85-bb40-4a4a-888a-9104e1aa345e",
+				"1cdccc39-6034-42a4-8aca-781cab2bf053"
+			],
+			"folders_order": [
+				"1f30aa29-cbb5-4d81-8e3f-f031622c4f7a",
+				"403d3492-0b4c-46f3-ab72-548505468e98",
+				"4e4fc225-7ce4-48a9-bcd5-19dcf32f946d",
+				"44561927-ab4a-41a2-a7d0-93a48efc7d1a",
+				"64c9dbb3-d2ae-4c03-92e3-d48ae5cde625",
+				"07b249bb-6947-4511-958f-9733c6cd8d5d",
+				"75134e9e-5b5b-4bf5-8c4d-a7c841c98694",
+				"e4acbc9d-1dd7-47ca-be06-c3d638c2d878",
+				"e7e70756-ae2d-46c2-8761-cbc4a793ccd6",
+				"3294c402-2d8b-4e46-9422-4c28dbccb7a5",
+				"9e82df55-c0e8-47f3-9357-dc93c9772e48"
+			],
+			"folders": [
+				{
+					"id": "64c9dbb3-d2ae-4c03-92e3-d48ae5cde625",
+					"name": "Certificates",
+					"description": "",
+					"auth": null,
+					"events": null,
+					"collection": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folder": null,
+					"order": [
+						"d750892d-9490-498d-bbf2-480e060b2aab"
+					],
+					"folders_order": [],
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folderId": "64c9dbb3-d2ae-4c03-92e3-d48ae5cde625"
+				},
+				{
+					"id": "e4acbc9d-1dd7-47ca-be06-c3d638c2d878",
+					"name": "Dev Portal",
+					"description": "",
+					"auth": null,
+					"events": null,
+					"collection": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folder": null,
+					"order": [
+						"a576a77d-1d82-4958-b146-e55b9ebc0cf1",
+						"21cfebed-1540-4b39-83c6-eb525a1f3dc8",
+						"5982c3e4-bc5e-47b5-97e8-4baf6acfb7e3",
+						"00af2186-10e9-428c-8364-dda9c35d4374"
+					],
+					"folders_order": [],
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folderId": "e4acbc9d-1dd7-47ca-be06-c3d638c2d878"
+				},
+				{
+					"id": "75134e9e-5b5b-4bf5-8c4d-a7c841c98694",
+					"name": "Entities",
+					"description": "",
+					"auth": null,
+					"events": null,
+					"collection": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folder": null,
+					"order": [
+						"c8314b57-8a5d-4d8e-9d2e-4b5482013616",
+						"aa5a01c6-2118-4177-b639-46866cc3ec3d",
+						"4848d8b7-e712-48f4-a115-d13043581c1d"
+					],
+					"folders_order": [],
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folderId": "75134e9e-5b5b-4bf5-8c4d-a7c841c98694"
+				},
+				{
+					"id": "3294c402-2d8b-4e46-9422-4c28dbccb7a5",
+					"name": "OAuth Demo",
+					"description": "",
+					"auth": null,
+					"events": null,
+					"collection": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folder": null,
+					"order": [
+						"3d622e3a-b980-4ef4-9ef6-f4757f14a576",
+						"64a6132f-e3b6-4ea9-ad89-22e29732e066",
+						"76f4d2b4-08b4-4227-b841-3cb53f3e4761",
+						"1d48b6f9-e1ad-406d-84b5-338b84350c4e",
+						"d45686b0-0e95-46bf-a960-eea961d8f5a0",
+						"de796ed3-cb8b-45ca-912e-43fa97efc272",
+						"54b35b7c-9901-4154-aa25-0621950d1914",
+						"9a6ef736-31b1-4a93-9ab1-93f00dd5ed78"
+					],
+					"folders_order": [],
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folderId": "3294c402-2d8b-4e46-9422-4c28dbccb7a5"
+				},
+				{
+					"id": "9e82df55-c0e8-47f3-9357-dc93c9772e48",
+					"name": "OIDC",
+					"description": "",
+					"auth": null,
+					"events": null,
+					"collection": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folder": null,
+					"order": [
+						"2ae935f0-9996-4caa-8681-988d72979a35",
+						"23c6dec4-5fdb-401b-98e6-39ff3bcfadd1",
+						"389bd596-656e-4368-ad35-ec8a9c2a79ae"
+					],
+					"folders_order": [],
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folderId": "9e82df55-c0e8-47f3-9357-dc93c9772e48"
+				},
+				{
+					"id": "44561927-ab4a-41a2-a7d0-93a48efc7d1a",
+					"name": "Plugins",
+					"description": null,
+					"auth": null,
+					"events": null,
+					"collection": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folder": null,
+					"order": [
+						"79bef5d8-d809-42fb-bf4b-5fa99b16a49c",
+						"b2983d50-03a6-44e4-bb82-88396ddbbe20",
+						"902be02a-2cf3-4e48-97fd-0ef59578134e",
+						"05ea59f4-5ea8-46b7-ba4e-e5c1546fd1ed",
+						"9208d3b3-13e2-4a2d-a548-20b790954712"
+					],
+					"folders_order": [],
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folderId": "44561927-ab4a-41a2-a7d0-93a48efc7d1a"
+				},
+				{
+					"id": "e7e70756-ae2d-46c2-8761-cbc4a793ccd6",
+					"name": "RBAC",
+					"description": null,
+					"auth": null,
+					"events": null,
+					"collection": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folder": null,
+					"order": [
+						"65f30e1b-96cf-4693-a1a7-00507f76eda4",
+						"c01f52ee-e70d-49cc-85c7-72c37a631c6a",
+						"fb55de59-a8b7-4d14-b0f5-3ba422feb369",
+						"fbd13262-8960-493a-8237-283ffda67ad0",
+						"6024713b-e13f-42ae-a5e5-a5965e338288",
+						"710753ea-f9d3-4006-961d-582542a3f93d",
+						"9bc0ddea-7843-40fe-a988-a6f1d2b21949",
+						"05924dbe-3df1-4a35-b107-49fc8cd7f485",
+						"154eafca-723e-4ae5-853c-c2dde37c2a7c",
+						"b390fb05-2362-492f-8325-6d7fd0b97bc0",
+						"69522856-82e2-4704-8e94-8d7307ac0159",
+						"588e8a7c-3341-4ded-963e-c2bc772683fb",
+						"d2e535cf-0e2f-4f71-a8f5-988c21ea4a2c",
+						"8db0e115-d755-46b5-8178-fe9bd67af2b2",
+						"fccc6791-7cd0-431a-b023-f806bd56f959"
+					],
+					"folders_order": [],
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folderId": "e7e70756-ae2d-46c2-8761-cbc4a793ccd6"
+				},
+				{
+					"id": "1f30aa29-cbb5-4d81-8e3f-f031622c4f7a",
+					"name": "Routes",
+					"description": "",
+					"auth": null,
+					"events": null,
+					"collection": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folder": null,
+					"order": [
+						"76fe4f69-a4dd-492e-a7cb-decb5299aa1d",
+						"65d86361-5f5f-464f-8b54-0efbc94962b4"
+					],
+					"folders_order": [],
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folderId": "1f30aa29-cbb5-4d81-8e3f-f031622c4f7a"
+				},
+				{
+					"id": "403d3492-0b4c-46f3-ab72-548505468e98",
+					"name": "Services",
+					"description": "",
+					"auth": null,
+					"events": null,
+					"collection": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folder": null,
+					"order": [
+						"19d778fc-6f2a-4d9f-8c67-694531ebaed2",
+						"1e07e935-d885-4791-8120-facd85ded49d",
+						"e265eadf-27df-46f5-bd40-e2a51222db55",
+						"23cfa3a3-e834-4433-bef4-efa4d795c845",
+						"177eb3ff-6f85-4b46-8f96-352378dcb0a4",
+						"1df19700-42b8-45f2-8937-f085b13cd3aa"
+					],
+					"folders_order": [],
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folderId": "403d3492-0b4c-46f3-ab72-548505468e98"
+				},
+				{
+					"id": "4e4fc225-7ce4-48a9-bcd5-19dcf32f946d",
+					"name": "Upstreams",
+					"description": "",
+					"auth": null,
+					"events": null,
+					"collection": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folder": null,
+					"order": [
+						"85f48d3e-515b-41d5-9b30-bb2d7b8ffd1f",
+						"e9e21445-29a4-43fc-93fb-6861c4130ea2",
+						"d0f94bb5-255f-416a-b033-9b16f5d0e340",
+						"3190754f-78fc-4e1d-95a4-580fe51a22e8",
+						"ba277ae5-a18c-4c43-8308-7d101694b777",
+						"d9c73c20-e9b0-4379-80e4-b30c5fc5f005"
+					],
+					"folders_order": [],
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folderId": "4e4fc225-7ce4-48a9-bcd5-19dcf32f946d"
+				},
+				{
+					"id": "07b249bb-6947-4511-958f-9733c6cd8d5d",
+					"name": "Workspaces",
+					"description": "",
+					"auth": null,
+					"events": null,
+					"collection": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folder": null,
+					"order": [
+						"2e2d0be7-1578-48e1-9a20-2a79afb4ba5e",
+						"14eea436-c3b3-4829-b85f-c74eadd51ec8",
+						"17015be2-f7f4-490a-a54f-5fc568671e5b",
+						"b81e5857-b5a6-4214-8b73-48aa5570e81c",
+						"1973ffdb-78fb-42ee-b3ae-06d6dd2171fd",
+						"1a5b0778-7915-481e-9eba-cc863948c5a4",
+						"ecee811a-101f-4194-a62d-e28d942e88f8"
+					],
+					"folders_order": [],
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"folderId": "07b249bb-6947-4511-958f-9733c6cd8d5d"
+				}
+			],
+			"requests": [
+				{
+					"id": "00af2186-10e9-428c-8364-dda9c35d4374",
+					"name": "Update OAuth2 Credentials",
+					"url": "{{baseURL}}:{{portalAPIPort}}/credentials/oauth2/64819670-8002-4800-8656-4fe3a88e28aa",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "PATCH",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "basic",
+						"basic": [
+							{
+								"key": "password",
+								"value": "password"
+							},
+							{
+								"key": "username",
+								"value": "stu.roberts+dp@konghq.com"
+							}
+						]
+					},
+					"events": null,
+					"folder": "e4acbc9d-1dd7-47ca-be06-c3d638c2d878",
+					"currentHelper": "basicAuth",
+					"helperAttributes": {
+						"id": "basic",
+						"username": "stu.roberts+dp@konghq.com",
+						"password": "password"
+					},
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{\"created_at\":1550848972000,\n \"client_id\":\"DJMHm85PPcj4przbE72VPWyV7FXNyLmp\",\n \"id\":\"64819670-8002-4800-8656-4fe3a88e28aa\",\n \"redirect_uri\":[\"http://localhost\"],\n \"name\":\"abc\",\n \"client_secret\":\"YfabxG1tRH84F6rpBQX5ngx51C2DHxhO\",\n \"consumer_id\":\"99003f4c-4e63-4654-8e13-8961fb83f13b\"\n}",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "05924dbe-3df1-4a35-b107-49fc8cd7f485",
+					"name": "Add Roles to user",
+					"url": "{{baseURL}}:{{adminPort}}/default/rbac/users/abarnes/roles",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Service",
+									"jsonResponse.data.forEach(function (serviceDetails) {",
+									"  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"    console.log('Service: ' + serviceDetails.domain);",
+									"  }",
+									"  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e7e70756-ae2d-46c2-8761-cbc4a793ccd6",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each Service\njsonResponse.data.forEach(function (serviceDetails) {\n  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){\n    console.log('Service: ' + serviceDetails.domain);\n  }\n  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);\n})\n\n",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{\"roles\":\"specs-admin\"}",
+					"headers": "Content-Type: application/json\nKong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "05ea59f4-5ea8-46b7-ba4e-e5c1546fd1ed",
+					"name": "Add Global Plugin",
+					"url": "{{baseURL}}:{{adminPort}}/plugins/",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"description": "",
+							"enabled": true,
+							"key": "Content-Type",
+							"type": "text",
+							"value": "application/json"
+						},
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"/*",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "44561927-ab4a-41a2-a7d0-93a48efc7d1a",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each CH app\",\n/*\njsonResponse.data.forEach(function (pluginDetails) {\n  console.log('Route: ' + pluginDetails.domain);\n  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);\n})\n*/",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{ \n\"name\": \"response-transformer\", \n\"config\": { \n  \"remove.headers\": \"Server\"\n  } \n}",
+					"headers": "Content-Type: application/json\nKong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "14eea436-c3b3-4829-b85f-c74eadd51ec8",
+					"name": "Get Workspace Metadata",
+					"url": "{{baseURL}}:{{adminPort}}/workspaces/{{workspace_newWorkspace}}/meta",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each workspace,",
+									"/*",
+									"jsonResponse.data.forEach(function (workspaceDetails) {",
+									"  console.log('Workspace: ' + workspaceDetails.domain);",
+									"  postman.setEnvironmentVariable(\"workspace_\"+workspaceDetails.name, workspaceDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "07b249bb-6947-4511-958f-9733c6cd8d5d",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each workspace,\n/*\njsonResponse.data.forEach(function (workspaceDetails) {\n  console.log('Workspace: ' + workspaceDetails.domain);\n  postman.setEnvironmentVariable(\"workspace_\"+workspaceDetails.name, workspaceDetails.id);\n})\n*/",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"pathVariables": {}
+				},
+				{
+					"id": "154eafca-723e-4ae5-853c-c2dde37c2a7c",
+					"name": "Get Admins",
+					"url": "{{baseURL}}:{{adminPort}}/admins",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e7e70756-ae2d-46c2-8761-cbc4a793ccd6",
+					"preRequestScript": null,
+					"tests": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "17015be2-f7f4-490a-a54f-5fc568671e5b",
+					"name": "Get Workspace Entities",
+					"url": "{{baseURL}}:{{adminPort}}/workspaces/{{workspace_newWorkspace}}/entities",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each workspace,",
+									"/*",
+									"jsonResponse.data.forEach(function (workspaceDetails) {",
+									"  console.log('Workspace: ' + workspaceDetails.domain);",
+									"  postman.setEnvironmentVariable(\"workspace_\"+workspaceDetails.name, workspaceDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "07b249bb-6947-4511-958f-9733c6cd8d5d",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each workspace,\n/*\njsonResponse.data.forEach(function (workspaceDetails) {\n  console.log('Workspace: ' + workspaceDetails.domain);\n  postman.setEnvironmentVariable(\"workspace_\"+workspaceDetails.name, workspaceDetails.id);\n})\n*/",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"pathVariables": {}
+				},
+				{
+					"id": "177eb3ff-6f85-4b46-8f96-352378dcb0a4",
+					"name": "Update service",
+					"url": "{{baseURL}}:{{adminPort}}/services/{{service_temp}}",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"name": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"method": "PATCH",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "403d3492-0b4c-46f3-ab72-548505468e98",
+					"preRequestScript": null,
+					"tests": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{\n   \"host\":\"10.0.10.1\",\n   \"connect_timeout\":60000,\n   \"protocol\":\"http\",\n   \"name\":\"temp\",\n   \"read_timeout\":60000,\n   \"port\":80,\n   \"path\":\"/status/200\",\n   \"retries\":5,\n   \"write_timeout\":60000\n}",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "1973ffdb-78fb-42ee-b3ae-06d6dd2171fd",
+					"name": "Create Workspace",
+					"url": "{{baseURL}}:{{adminPort}}/workspaces",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for the workspace",
+									"console.log('Workspace: ' + jsonResponse.name);",
+									"postman.setEnvironmentVariable(\"workspace_\"+jsonResponse.name, jsonResponse.id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "07b249bb-6947-4511-958f-9733c6cd8d5d",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for the workspace\nconsole.log('Workspace: ' + jsonResponse.name);\npostman.setEnvironmentVariable(\"workspace_\"+jsonResponse.name, jsonResponse.id);\n",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{\n  \"name\": \"newWorkspace\"\n}\n",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "19d778fc-6f2a-4d9f-8c67-694531ebaed2",
+					"name": "Get All Services",
+					"url": "{{baseURL}}:{{adminPort}}/services",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Service",
+									"jsonResponse.data.forEach(function (serviceDetails) {",
+									"  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"    console.log('Service: ' + serviceDetails.domain);",
+									"  }",
+									"  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "403d3492-0b4c-46f3-ab72-548505468e98",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each Service\njsonResponse.data.forEach(function (serviceDetails) {\n  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){\n    console.log('Service: ' + serviceDetails.domain);\n  }\n  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);\n})\n\n",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "1a5b0778-7915-481e-9eba-cc863948c5a4",
+					"name": "Delete Workspace",
+					"url": "{{baseURL}}:{{adminPort}}/workspaces/{{workspace_newWorkspace}}",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [],
+					"method": "DELETE",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"//var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"/*",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "07b249bb-6947-4511-958f-9733c6cd8d5d",
+					"preRequestScript": null,
+					"tests": "//var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each CH app\",\n/*\njsonResponse.data.forEach(function (pluginDetails) {\n  console.log('Route: ' + pluginDetails.domain);\n  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);\n})\n*/",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "1cdccc39-6034-42a4-8aca-781cab2bf053",
+					"name": "Kong Info",
+					"url": "{{baseURL}}:{{adminPort}}/default/kong",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "1d48b6f9-e1ad-406d-84b5-338b84350c4e",
+					"name": "Add OAuth2 Plugin",
+					"url": "{{baseURL}}:{{adminPort}}/services/mock-service/plugins/",
+					"description": "",
+					"data": [
+						{
+							"key": "name",
+							"value": "oauth2",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "config.scopes",
+							"value": "email, phone, address",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "config.mandatory_scope",
+							"value": "true",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "config.enable_authorization_code",
+							"value": "true",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataMode": "urlencoded",
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": "3294c402-2d8b-4e46-9422-4c28dbccb7a5",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "1df19700-42b8-45f2-8937-f085b13cd3aa",
+					"name": "Delete service",
+					"url": "{{baseURL}}:{{adminPort}}/services/{{service_temp}}",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "DELETE",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									"//Delete the service name env variable",
+									"var serviceName = (pm.request.url.path[pm.request.url.path.length -1]);",
+									"postman.clearEnvironmentVariable(\"service_\" + serviceName);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "403d3492-0b4c-46f3-ab72-548505468e98",
+					"preRequestScript": null,
+					"tests": "//Delete the service name env variable\nvar serviceName = (pm.request.url.path[pm.request.url.path.length -1]);\npostman.clearEnvironmentVariable(\"service_\" + serviceName);\n",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "1e07e935-d885-4791-8120-facd85ded49d",
+					"name": "Get Service",
+					"url": "{{baseURL}}:{{adminPort}}/services/{{service_temp}}",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "26f388f3-f2a3-49e6-a05e-4572d722ca06",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"//jsonResponse.data.forEach(function (serviceDetails) {",
+									"//  console.log('Service: ' + serviceDetails.domain);",
+									"//  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);",
+									"//})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "403d3492-0b4c-46f3-ab72-548505468e98",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each CH app\",\n//jsonResponse.data.forEach(function (serviceDetails) {\n//  console.log('Service: ' + serviceDetails.domain);\n//  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);\n//})\n\n",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "21cfebed-1540-4b39-83c6-eb525a1f3dc8",
+					"name": "Get Portal Developers",
+					"url": "{{baseURL}}:{{adminPort}}/testabc/portal/developers",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e4acbc9d-1dd7-47ca-be06-c3d638c2d878",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each CH app\",\njsonResponse.data.forEach(function (pluginDetails) {\n  console.log('Route: ' + pluginDetails.domain);\n  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);\n})",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "23c6dec4-5fdb-401b-98e6-39ff3bcfadd1",
+					"name": "Get Issuer",
+					"url": "{{baseURL}}:{{adminPort}}/openid-connect/issuers/70530c44-ef6d-40a7-8cef-bec5b63d6ddf",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"description": "",
+							"enabled": true,
+							"key": "Kong-Admin-Token",
+							"type": "text",
+							"value": "{{adminToken}}"
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"noauth": [],
+						"type": "noauth"
+					},
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "9e82df55-c0e8-47f3-9357-dc93c9772e48",
+					"preRequestScript": null,
+					"tests": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "23cfa3a3-e834-4433-bef4-efa4d795c845",
+					"name": "Create/Update Service",
+					"url": "{{baseURL}}:{{adminPort}}/services/{{service_temp}}",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"name": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"method": "PUT",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "403d3492-0b4c-46f3-ab72-548505468e98",
+					"preRequestScript": null,
+					"tests": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{\n   \"host\":\"10.0.10.1\",\n   \"connect_timeout\":60000,\n   \"protocol\":\"http\",\n   \"name\":\"temp\",\n   \"read_timeout\":60000,\n   \"port\":80,\n   \"path\":\"/status/200\",\n   \"retries\":5,\n   \"write_timeout\":60000\n}",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "2ae935f0-9996-4caa-8681-988d72979a35",
+					"name": "Get All Issuers",
+					"url": "{{baseURL}}:{{adminPort}}/openid-connect/issuers/",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "noauth",
+						"noauth": []
+					},
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "9e82df55-c0e8-47f3-9357-dc93c9772e48",
+					"preRequestScript": null,
+					"tests": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "2e2d0be7-1578-48e1-9a20-2a79afb4ba5e",
+					"name": "Get Workspaces",
+					"url": "{{baseURL}}:{{adminPort}}/workspaces",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each workspace,",
+									"jsonResponse.data.forEach(function (workspaceDetails) {",
+									"  console.log('Workspace: ' + workspaceDetails.domain);",
+									"  postman.setEnvironmentVariable(\"workspace_\"+workspaceDetails.name, workspaceDetails.id);",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "07b249bb-6947-4511-958f-9733c6cd8d5d",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each workspace,\njsonResponse.data.forEach(function (workspaceDetails) {\n  console.log('Workspace: ' + workspaceDetails.domain);\n  postman.setEnvironmentVariable(\"workspace_\"+workspaceDetails.name, workspaceDetails.id);\n})\n",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "30ed82ae-d211-434b-a5ef-8cd7a333dd40",
+					"name": "Kong Status",
+					"url": "{{baseURL}}:{{adminPort}}/status",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "3190754f-78fc-4e1d-95a4-580fe51a22e8",
+					"name": "Delete Upstream Target",
+					"url": "  {{baseURL}}:{{adminPort}}/upstreams/{{upstream_upstream-B}}/targets/2fb3ff88-284a-4031-8967-6c5b7679b8d4",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "DELETE",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": "4e4fc225-7ce4-48a9-bcd5-19dcf32f946d",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "389bd596-656e-4368-ad35-ec8a9c2a79ae",
+					"name": "Delete Issuer",
+					"url": "{{baseURL}}:{{adminPort}}/openid-connect/issuers/70530c44-ef6d-40a7-8cef-bec5b63d6ddf",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"description": "",
+							"enabled": true,
+							"key": "Kong-Admin-Token",
+							"type": "text",
+							"value": "{{adminToken}}"
+						}
+					],
+					"method": "DELETE",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"noauth": [],
+						"type": "noauth"
+					},
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "9e82df55-c0e8-47f3-9357-dc93c9772e48",
+					"preRequestScript": null,
+					"tests": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "3d622e3a-b980-4ef4-9ef6-f4757f14a576",
+					"name": "Add Service",
+					"url": "{{baseURL}}:{{adminPort}}/services",
+					"description": "",
+					"data": [
+						{
+							"key": "name",
+							"value": "mock-service",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "url",
+							"value": "http://mockbin.org/request",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataMode": "urlencoded",
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": "3294c402-2d8b-4e46-9422-4c28dbccb7a5",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "4848d8b7-e712-48f4-a115-d13043581c1d",
+					"name": "Create Entity",
+					"url": "{{baseURL}}:{{adminPort}}/workspaces/TeamA/entities",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "noauth",
+						"noauth": []
+					},
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									"/*",
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Service",
+									"jsonResponse.data.forEach(function (serviceDetails) {",
+									"  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"    console.log('Service: ' + serviceDetails.domain);",
+									"  }",
+									"  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);",
+									"})",
+									"",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "75134e9e-5b5b-4bf5-8c4d-a7c841c98694",
+					"preRequestScript": null,
+					"tests": "/*\nvar jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each Service\njsonResponse.data.forEach(function (serviceDetails) {\n  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){\n    console.log('Service: ' + serviceDetails.domain);\n  }\n  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);\n})\n\n*/",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{\"entities\":\"302ac7c7-0508-4a18-a45e-51b25a9c07e5\"}\n",
+					"headers": "Kong-Admin-Token: {{adminToken}}\nContent-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "54b35b7c-9901-4154-aa25-0621950d1914",
+					"name": "Get OAuth2 Apps",
+					"url": "{{baseURL}}:{{adminPort}}/oauth2",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": "3294c402-2d8b-4e46-9422-4c28dbccb7a5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{\"client_id\":\"viJ8dMD6rCpk27olm0kBvoL36JIunsph\"}",
+					"headers": "Kong-Admin-Token: {{adminToken}}\nContent-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "588e8a7c-3341-4ded-963e-c2bc772683fb",
+					"name": "Register Admin",
+					"url": "{{baseURL}}:{{adminPort}}/admins/register",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e7e70756-ae2d-46c2-8761-cbc4a793ccd6",
+					"preRequestScript": null,
+					"tests": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{\"token\":\"my-super-stu-token\",\n \"username\":\"super-stu\",\n \"email\":\"stu.roberts+super-stu@konghq.com\",\n \"password\":\"super-stu\"}",
+					"headers": "Kong-Admin-Token: {{adminToken}}\nContent-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "5982c3e4-bc5e-47b5-97e8-4baf6acfb7e3",
+					"name": "Update Developer Portal Account",
+					"url": "{{baseURL}}:{{adminPort}}/testabc/portal/developers/db04cae6-3c0e-46d5-afeb-8508223b587e",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "PATCH",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": "e4acbc9d-1dd7-47ca-be06-c3d638c2d878",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{\"type\": 1, \n \"status\": 0,\n \"meta\":\"{\\\"full_name\\\":\\\"\\\"}\"\n}",
+					"headers": "Content-Type: application/json\nKong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "6024713b-e13f-42ae-a5e5-a5965e338288",
+					"name": "Create User Copy",
+					"url": "{{baseURL}}:{{adminPort}}/rbac/users",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Service",
+									"jsonResponse.data.forEach(function (serviceDetails) {",
+									"  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"    console.log('Service: ' + serviceDetails.domain);",
+									"  }",
+									"  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e7e70756-ae2d-46c2-8761-cbc4a793ccd6",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each Service\njsonResponse.data.forEach(function (serviceDetails) {\n  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){\n    console.log('Service: ' + serviceDetails.domain);\n  }\n  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);\n})\n\n",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{\"name\":\"stu\"}",
+					"headers": "Content-Type: application/json\nKong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "64a6132f-e3b6-4ea9-ad89-22e29732e066",
+					"name": "Add Route",
+					"url": "{{baseURL}}:{{adminPort}}/services/mock-service/routes",
+					"description": "",
+					"data": [
+						{
+							"key": "hosts[]",
+							"value": "mockbin.org",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "paths[]",
+							"value": "/mock",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataMode": "urlencoded",
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": "3294c402-2d8b-4e46-9422-4c28dbccb7a5",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "65d86361-5f5f-464f-8b54-0efbc94962b4",
+					"name": "Create Route",
+					"url": "  {{baseURL}}:{{adminPort}}/services/{{service_temp}}/routes",
+					"description": "",
+					"data": [
+						{
+							"key": "protocols[]",
+							"value": "http",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "methods",
+							"value": "GET",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "methods",
+							"value": "POST",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "methods",
+							"value": "DELETE",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "paths[]",
+							"value": "/comment/\\S+",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "strip_path",
+							"value": "false",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "preserve_host",
+							"value": "true",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataMode": "urlencoded",
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": "1f30aa29-cbb5-4d81-8e3f-f031622c4f7a",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "65f30e1b-96cf-4693-a1a7-00507f76eda4",
+					"name": "Get User Info",
+					"url": "{{baseURL}}:{{adminPort}}/userinfo",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "noauth",
+						"noauth": []
+					},
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e7e70756-ae2d-46c2-8761-cbc4a793ccd6",
+					"preRequestScript": null,
+					"tests": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "69522856-82e2-4704-8e94-8d7307ac0159",
+					"name": "Get Admin User",
+					"url": "{{baseURL}}:{{adminPort}}/admins/super",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e7e70756-ae2d-46c2-8761-cbc4a793ccd6",
+					"preRequestScript": null,
+					"tests": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "710753ea-f9d3-4006-961d-582542a3f93d",
+					"name": "Delete User",
+					"url": "{{baseURL}}:{{adminPort}}/default/rbac/users/abarnes",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "DELETE",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e7e70756-ae2d-46c2-8761-cbc4a793ccd6",
+					"preRequestScript": null,
+					"tests": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{\"name\":\"myadmin\"}",
+					"headers": "Content-Type: application/json\nKong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "76f4d2b4-08b4-4227-b841-3cb53f3e4761",
+					"name": "Call API",
+					"url": "http://127.0.0.1:8000/mock",
+					"description": "",
+					"data": [],
+					"dataMode": "params",
+					"headerData": [
+						{
+							"key": "Host",
+							"value": "mockbin.org",
+							"enabled": true
+						},
+						{
+							"key": "Authorization",
+							"value": "bearer BjQMIzf2cgzZnGb0IwZillsgWhOxkTmb",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": "3294c402-2d8b-4e46-9422-4c28dbccb7a5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Host: mockbin.org\nAuthorization: bearer BjQMIzf2cgzZnGb0IwZillsgWhOxkTmb\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "76fe4f69-a4dd-492e-a7cb-decb5299aa1d",
+					"name": "Get Routes",
+					"url": "{{baseURL}}:{{adminPort}}/routes",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Route",
+									"jsonResponse.data.forEach(function (routeDetails) {",
+									"    ",
+									"    ",
+									"    if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"      console.log('Route: ' + routeDetails.id);",
+									"    }",
+									"",
+									"  postman.setEnvironmentVariable(\"route_\"+routeDetails.id, routeDetails.id);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "1f30aa29-cbb5-4d81-8e3f-f031622c4f7a",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each Route\njsonResponse.data.forEach(function (routeDetails) {\n    \n    \n    if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){\n      console.log('Route: ' + routeDetails.id);\n    }\n\n  postman.setEnvironmentVariable(\"route_\"+routeDetails.id, routeDetails.id);\n})",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "79bef5d8-d809-42fb-bf4b-5fa99b16a49c",
+					"name": "Get All Plugins",
+					"url": "{{baseURL}}:{{adminPort}}/plugins",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "44561927-ab4a-41a2-a7d0-93a48efc7d1a",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each CH app\",\njsonResponse.data.forEach(function (pluginDetails) {\n  console.log('Route: ' + pluginDetails.domain);\n  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);\n})",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "8484ca85-bb40-4a4a-888a-9104e1aa345e",
+					"name": "User Info",
+					"url": "{{baseURL}}:{{adminPort}}/userinfo",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "85f48d3e-515b-41d5-9b30-bb2d7b8ffd1f",
+					"name": "Get Upstreams",
+					"url": "  {{baseURL}}:{{adminPort}}/upstreams",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8c973721-390d-4fd6-a9fe-a8c24b4bd625",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Route",
+									"jsonResponse.data.forEach(function (upstreamDetails) {",
+									"    ",
+									"  console.log('Route: ' + upstreamDetails.name);",
+									"",
+									"  postman.setEnvironmentVariable(\"upstream_\"+upstreamDetails.name, upstreamDetails.id);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "4e4fc225-7ce4-48a9-bcd5-19dcf32f946d",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each Route\njsonResponse.data.forEach(function (upstreamDetails) {\n    \n  console.log('Route: ' + upstreamDetails.name);\n\n  postman.setEnvironmentVariable(\"upstream_\"+upstreamDetails.name, upstreamDetails.id);\n})",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "8db0e115-d755-46b5-8178-fe9bd67af2b2",
+					"name": "Get All Roles",
+					"url": "{{baseURL}}:{{adminPort}}/default/rbac/roles",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e7e70756-ae2d-46c2-8761-cbc4a793ccd6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"preRequestScript": null,
+					"tests": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "",
+					"headers": "Content-Type: application/json\nKong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "902be02a-2cf3-4e48-97fd-0ef59578134e",
+					"name": "Add Plugin",
+					"url": "{{baseURL}}:{{adminPort}}/services/{{service_temp}}/plugins/",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"description": "",
+							"enabled": true,
+							"key": "Content-Type",
+							"type": "text",
+							"value": "application/json"
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"/*",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "44561927-ab4a-41a2-a7d0-93a48efc7d1a",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each CH app\",\n/*\njsonResponse.data.forEach(function (pluginDetails) {\n  console.log('Route: ' + pluginDetails.domain);\n  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);\n})\n*/",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{ \n\"name\": \"cors\", \n\"config\": { \n  \"credentials\": null, \n  \"preflight_continue\": null \n  } \n}",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "9208d3b3-13e2-4a2d-a548-20b790954712",
+					"name": "Update Plugin",
+					"url": "{{baseURL}}:{{adminPort}}/plugins/{{plugin_6e9b5b5c-e36d-4bfc-bac6-5b05b53f8b8a}}",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "PATCH",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"/*",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "44561927-ab4a-41a2-a7d0-93a48efc7d1a",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each CH app\",\n/*\njsonResponse.data.forEach(function (pluginDetails) {\n  console.log('Route: ' + pluginDetails.domain);\n  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);\n})\n*/",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{ \n\"name\": \"cors\", \n\"config\": { \n  \"credentials\": null, \n  \"preflight_continue\": null \n  } \n}",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "9a6ef736-31b1-4a93-9ab1-93f00dd5ed78",
+					"name": "Get Access Token",
+					"url": "https://127.0.0.1:8443/mock/oauth2/token",
+					"description": null,
+					"data": [
+						{
+							"key": "grant_type",
+							"value": "authorization_code",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "client_id",
+							"value": "viJ8dMD6rCpk27olm0kBvoL36JIunsph",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "client_secret",
+							"value": "Aq2U7Sz6UCsLs9IWA17xNWQPnWPWFPHw",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "redirect_uri",
+							"value": "http://konghq.com/",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "code",
+							"value": "qKS9j2tl3ANzzAs1mlU9SvocS1f3GAuH",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataMode": "urlencoded",
+					"headerData": [
+						{
+							"key": "Host",
+							"value": "mockbin.org",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": "3294c402-2d8b-4e46-9422-4c28dbccb7a5",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Host: mockbin.org\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "9bc0ddea-7843-40fe-a988-a6f1d2b21949",
+					"name": "Create Roles",
+					"url": "{{baseURL}}:{{adminPort}}/rbac/users/stu/roles",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Service",
+									"jsonResponse.data.forEach(function (serviceDetails) {",
+									"  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"    console.log('Service: ' + serviceDetails.domain);",
+									"  }",
+									"  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e7e70756-ae2d-46c2-8761-cbc4a793ccd6",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each Service\njsonResponse.data.forEach(function (serviceDetails) {\n  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){\n    console.log('Service: ' + serviceDetails.domain);\n  }\n  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);\n})\n\n",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{\"roles\":\"super-admin\"}",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "a576a77d-1d82-4958-b146-e55b9ebc0cf1",
+					"name": "Register",
+					"url": "{{baseURL}}:{{portalAPIPort}}/default/register",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": "e4acbc9d-1dd7-47ca-be06-c3d638c2d878",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{\"email\":\"stu.roberts+dp2@konghq.com\",\n \"password\":\"password\",\n \"meta\":\"{\\\"full_name\\\":\\\"Developer Two\\\"}\"\n}",
+					"headers": "Content-Type: application/json\nKong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "aa5a01c6-2118-4177-b639-46866cc3ec3d",
+					"name": "Get Entity",
+					"url": "{{baseURL}}:{{adminPort}}/workspaces/default/entities/302ac7c7-0508-4a18-a45e-51b25a9c07e5",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "noauth",
+						"noauth": []
+					},
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									"/*",
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Service",
+									"jsonResponse.data.forEach(function (serviceDetails) {",
+									"  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"    console.log('Service: ' + serviceDetails.domain);",
+									"  }",
+									"  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);",
+									"})",
+									"",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "75134e9e-5b5b-4bf5-8c4d-a7c841c98694",
+					"preRequestScript": null,
+					"tests": "/*\nvar jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each Service\njsonResponse.data.forEach(function (serviceDetails) {\n  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){\n    console.log('Service: ' + serviceDetails.domain);\n  }\n  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);\n})\n\n*/",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "b2983d50-03a6-44e4-bb82-88396ddbbe20",
+					"name": "Get Plugin",
+					"url": "{{baseURL}}:{{adminPort}}/plugins/{{plugin_31f0fb93-9b75-4452-b829-b6ec30ceef4d}}",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"/*",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "44561927-ab4a-41a2-a7d0-93a48efc7d1a",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each CH app\",\n/*\njsonResponse.data.forEach(function (pluginDetails) {\n  console.log('Route: ' + pluginDetails.domain);\n  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);\n})\n*/",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"pathVariables": {}
+				},
+				{
+					"id": "b390fb05-2362-492f-8325-6d7fd0b97bc0",
+					"name": "Invite Admin",
+					"url": "{{baseURL}}:{{adminPort}}/admins",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e7e70756-ae2d-46c2-8761-cbc4a793ccd6",
+					"preRequestScript": null,
+					"tests": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{\"username\":\"adminC\",\n \"email\":\"stu.roberts+adminC@konghq.com\"}\n",
+					"headers": "Kong-Admin-Token: {{adminToken}}\nContent-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "b54b3341-1374-4787-a824-899edd1972a9",
+					"name": "Kong Config",
+					"url": "{{baseURL}}:{{adminPort}}/",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "b81e5857-b5a6-4214-8b73-48aa5570e81c",
+					"name": "Get Workspace Files",
+					"url": "{{baseURL}}:{{adminPort}}/workspaces/newWorkspace/files",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each workspace,",
+									"/*",
+									"jsonResponse.data.forEach(function (workspaceDetails) {",
+									"  console.log('Workspace: ' + workspaceDetails.domain);",
+									"  postman.setEnvironmentVariable(\"workspace_\"+workspaceDetails.name, workspaceDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "07b249bb-6947-4511-958f-9733c6cd8d5d",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each workspace,\n/*\njsonResponse.data.forEach(function (workspaceDetails) {\n  console.log('Workspace: ' + workspaceDetails.domain);\n  postman.setEnvironmentVariable(\"workspace_\"+workspaceDetails.name, workspaceDetails.id);\n})\n*/",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"pathVariables": {}
+				},
+				{
+					"id": "ba277ae5-a18c-4c43-8308-7d101694b777",
+					"name": "Set Upstream Target Healthy",
+					"url": "  {{baseURL}}:{{adminPort}}/upstreams/{{upstream_upstream-B}}/targets/{{target_host-b.local:80}}/healthy",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"description": "",
+							"enabled": true,
+							"key": "Kong-Admin-Token",
+							"type": "text",
+							"value": "{{adminToken}}"
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": "4e4fc225-7ce4-48a9-bcd5-19dcf32f946d",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "c01f52ee-e70d-49cc-85c7-72c37a631c6a",
+					"name": "Get Users",
+					"url": "{{baseURL}}:{{adminPort}}/rbac/users",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "noauth",
+						"noauth": []
+					},
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Service",
+									"jsonResponse.data.forEach(function (serviceDetails) {",
+									"  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"    console.log('Service: ' + serviceDetails.domain);",
+									"  }",
+									"  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e7e70756-ae2d-46c2-8761-cbc4a793ccd6",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each Service\njsonResponse.data.forEach(function (serviceDetails) {\n  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){\n    console.log('Service: ' + serviceDetails.domain);\n  }\n  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);\n})\n\n",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "c8314b57-8a5d-4d8e-9d2e-4b5482013616",
+					"name": "Get All Entities",
+					"url": "{{baseURL}}:{{adminPort}}/workspaces/default/entities",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "noauth",
+						"noauth": []
+					},
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									"/*",
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Service",
+									"jsonResponse.data.forEach(function (serviceDetails) {",
+									"  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"    console.log('Service: ' + serviceDetails.domain);",
+									"  }",
+									"  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);",
+									"})",
+									"",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "75134e9e-5b5b-4bf5-8c4d-a7c841c98694",
+					"preRequestScript": null,
+					"tests": "/*\nvar jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each Service\njsonResponse.data.forEach(function (serviceDetails) {\n  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){\n    console.log('Service: ' + serviceDetails.domain);\n  }\n  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);\n})\n\n*/",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "d0f94bb5-255f-416a-b033-9b16f5d0e340",
+					"name": "Get Upstream Targets",
+					"url": "  {{baseURL}}:{{adminPort}}/upstreams/{{upstream_upstream-B}}/targets",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e7ea5d0e-5ec5-43b7-8555-abeda3784f02",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Route",
+									"jsonResponse.data.forEach(function (targetDetails) {",
+									"    ",
+									"  console.log('Route: ' + targetDetails.target);",
+									"",
+									"  postman.setEnvironmentVariable(\"target_\"+targetDetails.target, targetDetails.id);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "4e4fc225-7ce4-48a9-bcd5-19dcf32f946d",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each Route\njsonResponse.data.forEach(function (targetDetails) {\n    \n  console.log('Route: ' + targetDetails.target);\n\n  postman.setEnvironmentVariable(\"target_\"+targetDetails.target, targetDetails.id);\n})",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "d2e535cf-0e2f-4f71-a8f5-988c21ea4a2c",
+					"name": "Update Admin",
+					"url": "{{baseURL}}:{{adminPort}}/admins/password_resets",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "PATCH",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e7e70756-ae2d-46c2-8761-cbc4a793ccd6",
+					"preRequestScript": null,
+					"tests": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{\"email\":\"stu.roberts+super@konghq.com\",\n \"token\":\"my-super-token\"}",
+					"headers": "Kong-Admin-Token: {{adminToken}}\nContent-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "d45686b0-0e95-46bf-a960-eea961d8f5a0",
+					"name": "Create Consumer",
+					"url": "{{baseURL}}:{{adminPort}}/consumers/",
+					"description": "",
+					"data": [
+						{
+							"key": "username",
+							"value": "thefosk",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataMode": "urlencoded",
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": "3294c402-2d8b-4e46-9422-4c28dbccb7a5",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "d750892d-9490-498d-bbf2-480e060b2aab",
+					"name": "Get Certificates",
+					"url": "{{baseURL}}:{{adminPort}}/certificates",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "64c9dbb3-d2ae-4c03-92e3-d48ae5cde625",
+					"preRequestScript": null,
+					"tests": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"pathVariables": {}
+				},
+				{
+					"id": "d9c73c20-e9b0-4379-80e4-b30c5fc5f005",
+					"name": "Set Upstream Target Unhealthy",
+					"url": "  {{baseURL}}:{{adminPort}}/upstreams/{{upstream_upstream-B}}/targets/{{target_host-b.local:80}}/unhealthy",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"description": "",
+							"enabled": true,
+							"key": "Kong-Admin-Token",
+							"type": "text",
+							"value": "{{adminToken}}"
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": "4e4fc225-7ce4-48a9-bcd5-19dcf32f946d",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "de796ed3-cb8b-45ca-912e-43fa97efc272",
+					"name": "Create OAuth2 Application",
+					"url": "{{baseURL}}:{{adminPort}}/consumers/thefosk/oauth2/",
+					"description": "",
+					"data": [
+						{
+							"key": "name",
+							"value": "Hello World App",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "redirect_uri",
+							"value": "http://konghq.com/",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataMode": "urlencoded",
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": "3294c402-2d8b-4e46-9422-4c28dbccb7a5",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "e265eadf-27df-46f5-bd40-e2a51222db55",
+					"name": "Create Service",
+					"url": "{{baseURL}}:{{adminPort}}/services",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"name": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for the service",
+									"//console.log('Service: ' + jsonResponse.name);",
+									"postman.setEnvironmentVariable(\"service_\"+ jsonResponse.name, jsonResponse.name);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "403d3492-0b4c-46f3-ab72-548505468e98",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for the service\n//console.log('Service: ' + jsonResponse.name);\npostman.setEnvironmentVariable(\"service_\"+ jsonResponse.name, jsonResponse.name);\n\n",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{\n   \"host\":\"10.0.10.1\",\n   \"connect_timeout\":60000,\n   \"protocol\":\"http\",\n   \"name\":\"temp\",\n   \"read_timeout\":60000,\n   \"port\":80,\n   \"path\":\"/status/500\",\n   \"retries\":5,\n   \"write_timeout\":60000\n}",
+					"headers": "Content-Type: application/json\nKong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "e9e21445-29a4-43fc-93fb-6861c4130ea2",
+					"name": "Get Upstream",
+					"url": "  {{baseURL}}:{{adminPort}}/upstreams/{{upstream_upstream-B}}",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": "4e4fc225-7ce4-48a9-bcd5-19dcf32f946d",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "ecee811a-101f-4194-a62d-e28d942e88f8",
+					"name": "Delete Workspace (file entities)",
+					"url": "{{baseURL}}:{{adminPort}}/workspaces/{{workspace_newWorkspace}}/entities",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"jsonResponse.data.forEach(function (entityDetails) {",
+									"",
+									"    if (entityDetails.entity_type == \"files\" & entityDetails.unique_field_name == \"id\") {",
+									"",
+									"        var filesEntityUrl = postman.getEnvironmentVariable('baseURL') + ':' +postman.getEnvironmentVariable('adminPort') + '/newWorkspace/files/' + entityDetails.entity_id;",
+									"",
+									"        console.log('DELETE file : ' + filesEntityUrl);",
+									"    ",
+									"        pm.sendRequest({",
+									"            url: filesEntityUrl,",
+									"            method: 'DELETE',",
+									"        }, function (err, res) {",
+									"            console.log(res);",
+									"        });",
+									"",
+									"    }",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "07b249bb-6947-4511-958f-9733c6cd8d5d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\njsonResponse.data.forEach(function (entityDetails) {\n\n    if (entityDetails.entity_type == \"files\" & entityDetails.unique_field_name == \"id\") {\n\n        var filesEntityUrl = postman.getEnvironmentVariable('baseURL') + ':' +postman.getEnvironmentVariable('adminPort') + '/newWorkspace/files/' + entityDetails.entity_id;\n\n        console.log('DELETE file : ' + filesEntityUrl);\n    \n        pm.sendRequest({\n            url: filesEntityUrl,\n            method: 'DELETE',\n        }, function (err, res) {\n            console.log(res);\n        });\n\n    }\n})\n",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "fb55de59-a8b7-4d14-b0f5-3ba422feb369",
+					"name": "Get User Roles",
+					"url": "{{baseURL}}:{{adminPort}}/rbac/users/stu/roles",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e7e70756-ae2d-46c2-8761-cbc4a793ccd6",
+					"preRequestScript": null,
+					"tests": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"headers": "Kong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "fbd13262-8960-493a-8237-283ffda67ad0",
+					"name": "Create User",
+					"url": "{{baseURL}}:{{adminPort}}/rbac/users",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Service",
+									"jsonResponse.data.forEach(function (serviceDetails) {",
+									"  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"    console.log('Service: ' + serviceDetails.domain);",
+									"  }",
+									"  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e7e70756-ae2d-46c2-8761-cbc4a793ccd6",
+					"preRequestScript": null,
+					"tests": "var jsonResponse = JSON.parse(responseBody);\n\n// Create a Postman env variable for each Service\njsonResponse.data.forEach(function (serviceDetails) {\n  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){\n    console.log('Service: ' + serviceDetails.domain);\n  }\n  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);\n})\n\n",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "{\"name\":\"stu\"}",
+					"headers": "Content-Type: application/json\nKong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "fccc6791-7cd0-431a-b023-f806bd56f959",
+					"name": "Get Role",
+					"url": "{{baseURL}}:{{adminPort}}/default/rbac/roles/specs-admin/permissions",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "Kong-Admin-Token",
+							"value": "{{adminToken}}",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e7e70756-ae2d-46c2-8761-cbc4a793ccd6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"preRequestScript": null,
+					"tests": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "dbc59b97-5ad0-4f1c-a92a-a2a5707f8710",
+					"rawModeData": "",
+					"headers": "Content-Type: application/json\nKong-Admin-Token: {{adminToken}}\n",
+					"pathVariables": {}
+				}
+			]
+		}
+	],
+	"environments": [
+		{
+			"id": "330edbcf-f08c-4455-999b-9e56a2218282",
+			"name": "LocalKong - Postgres",
+			"values": [
+				{
+					"key": "baseURL",
+					"value": "http://10.0.10.1",
+					"enabled": true
+				},
+				{
+					"key": "adminPort",
+					"value": "18001",
+					"enabled": true
+				},
+				{
+					"key": "debug",
+					"value": "0",
+					"enabled": true
+				},
+				{
+					"key": "adminToken",
+					"value": "tkn",
+					"enabled": true
+				},
+				{
+					"key": "portalAPIPort",
+					"value": "18004",
+					"enabled": true
+				}
+			]
+		},
+		{
+			"id": "c7d70c34-6ab6-4049-a0fb-a7a007562b20",
+			"name": "LocalKong - Cassandra",
+			"values": [
+				{
+					"key": "baseURL",
+					"value": "http://10.0.10.1",
+					"enabled": true
+				},
+				{
+					"key": "adminPort",
+					"value": "28001",
+					"enabled": true
+				},
+				{
+					"key": "debug",
+					"value": "0",
+					"enabled": true
+				},
+				{
+					"key": "adminToken",
+					"value": "tkn",
+					"enabled": true
+				},
+				{
+					"key": "portalAPIPort",
+					"value": "28004",
+					"enabled": true
+				}
+			]
+		},
+		{
+			"id": "dee81d84-02a1-42f5-a107-05a87ee9fb76",
+			"name": "My Workspace - globals",
+			"values": []
+		}
+	],
+	"headerPresets": [
+		{
+			"id": "b619809e-f146-4584-9930-99cfcc3f2e0c",
+			"name": "KongAuthentication",
+			"headers": [
+				{
+					"key": "Kong-Admin-Token",
+					"value": "{{adminToken}}",
+					"type": "text",
+					"description": "",
+					"enabled": true
+				}
+			]
+		}
+	],
+	"globals": []
+}
