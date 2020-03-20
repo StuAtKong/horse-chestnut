@@ -1,0 +1,299 @@
+{
+	"info": {
+		"_postman_id": "39249d4a-360a-46e5-b46b-c6f4b2f3ef8b",
+		"name": "Keycloak",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add outh2-introspection Plugin to Route",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+						"exec": [
+							"var jsonResponse = JSON.parse(responseBody);",
+							"",
+							"// Create a Postman env variable for each CH app\",",
+							"/*",
+							"jsonResponse.data.forEach(function (pluginDetails) {",
+							"  console.log('Route: ' + pluginDetails.domain);",
+							"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+							"})",
+							"*/"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Kong-Admin-Token",
+						"value": "{{adminToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"config\": {\n        \"custom_introspection_headers\": {},\n        \"consumer_by\": \"client_id\",\n        \"timeout\": 10000,\n        \"custom_claims_forward\": [],\n        \"introspect_request\": false,\n        \"hide_credentials\": false,\n        \"token_type_hint\": \"access_token\",\n        \"authorization_value\": \"Basic a29uZzozZjkwNGE0Zi1lMTNlLTQ5ZjktODY1NC1lMTYzN2JiYzMzNWQ=\",\n        \"ttl\": 30,\n        \"introspection_url\": \"http://keycloak.lan:8080/auth/realms/kong/protocol/openid-connect/token/introspect\",\n        \"anonymous\": \"\",\n        \"keepalive\": 60000,\n        \"run_on_preflight\": true\n    },\n    \"name\": \"oauth2-introspection\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}:{{adminPort}}/centos/routes/{{route_dd805330-c0e7-4850-ad72-dd09218904b5}}/plugins",
+					"host": [
+						"{{baseURL}}"
+					],
+					"port": "{{adminPort}}",
+					"path": [
+						"centos",
+						"routes",
+						"{{route_dd805330-c0e7-4850-ad72-dd09218904b5}}",
+						"plugins"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update outh2-introspection Plugin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+						"exec": [
+							"var jsonResponse = JSON.parse(responseBody);",
+							"",
+							"// Create a Postman env variable for each CH app\",",
+							"/*",
+							"jsonResponse.data.forEach(function (pluginDetails) {",
+							"  console.log('Route: ' + pluginDetails.domain);",
+							"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+							"})",
+							"*/"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Kong-Admin-Token",
+						"value": "{{adminToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"config\": {\n        \"custom_introspection_headers\": {},\n        \"consumer_by\": \"client_id\",\n        \"timeout\": 10000,\n        \"custom_claims_forward\": [],\n        \"introspect_request\": false,\n        \"hide_credentials\": false,\n        \"token_type_hint\": \"access_token\",\n        \"authorization_value\": \"Basic a29uZzozZjkwNGE0Zi1lMTNlLTQ5ZjktODY1NC1lMTYzN2JiYzMzNWQ=\",\n        \"ttl\": 30,\n        \"introspection_url\": \"http://keycloak.lan:8080/auth/realms/kong/protocol/openid-connect/token/introspect\",\n        \"anonymous\": \"\",\n        \"keepalive\": 6000,\n        \"run_on_preflight\": true\n    },\n    \"name\": \"oauth2-introspection\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}:{{adminPort}}/centos/plugins/{{plugin_49e17e64-4628-421e-bb3e-414cf7fdac3e}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"port": "{{adminPort}}",
+					"path": [
+						"centos",
+						"plugins",
+						"{{plugin_49e17e64-4628-421e-bb3e-414cf7fdac3e}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Keycloak configuration",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{keycloakURL}}:{{keycloakPort}}/auth/realms/{{keycloakRealm}}/.well-known/openid-configuration",
+					"host": [
+						"{{keycloakURL}}"
+					],
+					"port": "{{keycloakPort}}",
+					"path": [
+						"auth",
+						"realms",
+						"{{keycloakRealm}}",
+						".well-known",
+						"openid-configuration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "50136893-69d2-4a17-a9b5-77ecd02e8447",
+						"exec": [
+							"var jsonResponse = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable(\"access_token\", jsonResponse.access_token);",
+							"postman.setEnvironmentVariable(\"refresh_token\", jsonResponse.refresh_token);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "content-type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "kong",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "3f904a4f-e13e-49f9-8654-e1637bbc335d",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "kong_user",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{keycloakURL}}:{{keycloakPort}}/auth/realms/{{keycloakRealm}}/protocol/openid-connect/token",
+					"host": [
+						"{{keycloakURL}}"
+					],
+					"port": "{{keycloakPort}}",
+					"path": [
+						"auth",
+						"realms",
+						"{{keycloakRealm}}",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Kong Introspection Plugin",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"url": {
+					"raw": "https://kong-centos.heronwood.co.uk:8443/consumer",
+					"protocol": "https",
+					"host": [
+						"kong-centos",
+						"heronwood",
+						"co",
+						"uk"
+					],
+					"port": "8443",
+					"path": [
+						"consumer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Keycloak Introspection",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic a29uZzozZjkwNGE0Zi1lMTNlLTQ5ZjktODY1NC1lMTYzN2JiYzMzNWQ=",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "text"
+						},
+						{
+							"key": "token_type_hint",
+							"value": "access_token",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://10.0.10.1:8080/auth/realms/kong/protocol/openid-connect/token/introspect",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"10",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"realms",
+						"kong",
+						"protocol",
+						"openid-connect",
+						"token",
+						"introspect"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
