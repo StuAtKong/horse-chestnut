@@ -5457,8 +5457,9 @@
 									"var jsonResponse = JSON.parse(responseBody);",
 									"",
 									"// Create a Postman env variable for each CH app\",",
-									"console.log('Application: ' + jsonResponse.name);",
-									"postman.setEnvironmentVariable(\"application_\"+jsonResponse.name, jsonResponse.id);"
+									"jsonResponse.data.forEach(function (credentialDetails) {",
+									"  postman.setEnvironmentVariable(\"credential_\"+credentialDetails.id, credentialDetails.id);",
+									"})"
 								],
 								"type": "text/javascript"
 							}
@@ -5485,6 +5486,94 @@
 								"{{application_MyFirstApp}}",
 								"credentials",
 								"oauth2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Application Credential",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"jsonResponse.data.forEach(function (credentialDetails) {",
+									"  console.log('Credential: ' + credentialDetails.name);",
+									"  postman.setEnvironmentVariable(\"credential_\"+credentialDetails.name, credentialDetails.id);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"type": "text",
+								"value": "{{adminToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/applications/{{application_MyFirstApp}}/credentials/oauth2/{{credential_MyFirstApp}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"applications",
+								"{{application_MyFirstApp}}",
+								"credentials",
+								"oauth2",
+								"{{credential_MyFirstApp}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Application Credential",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"type": "text",
+								"value": "{{adminToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/applications/{{application_MyFirstApp}}/credentials/oauth2/{{credential_fa45e7d8-5ada-48f1-8ca3-d9c8c845fce9}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"applications",
+								"{{application_MyFirstApp}}",
+								"credentials",
+								"oauth2",
+								"{{credential_fa45e7d8-5ada-48f1-8ca3-d9c8c845fce9}}"
 							]
 						}
 					},
