@@ -1579,6 +1579,62 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Create JWT plugin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"/*",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\n            \"name\": \"jwt\",\n            \"config\": {\n                \"secret_is_base64\": false,\n                \"run_on_preflight\": true,\n                \"uri_param_names\": [\n                    \"jwt\"\n                ],\n                \"key_claim_name\": \"iss\",\n                \"header_names\": [\n                    \"authorization\"\n                ],\n                \"maximum_expiration\": 0,\n                \"anonymous\": \"\",\n                \"claims_to_verify\": null,\n                \"cookie_names\": []\n            }\n        }"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/routes/{{route_33dbdb38-5ff5-4273-9ec1-095b9122c5b8}}/plugins",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"routes",
+								"{{route_33dbdb38-5ff5-4273-9ec1-095b9122c5b8}}",
+								"plugins"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -5294,6 +5350,184 @@
 								"{{workspace}}",
 								"keyring",
 								"export"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Applications",
+			"item": [
+				{
+					"name": "Get All Applications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"jsonResponse.data.forEach(function (applicationDetails) {",
+									"  console.log('Application: ' + applicationDetails.name);",
+									"  postman.setEnvironmentVariable(\"application_\"+applicationDetails.name, applicationDetails.id);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/applications",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"console.log('Application: ' + jsonResponse.name);",
+									"postman.setEnvironmentVariable(\"application_\"+jsonResponse.name, jsonResponse.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"type": "text",
+								"value": "{{adminToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/applications/{{application_MyFirstApp}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"applications",
+								"{{application_MyFirstApp}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Application Credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"console.log('Application: ' + jsonResponse.name);",
+									"postman.setEnvironmentVariable(\"application_\"+jsonResponse.name, jsonResponse.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"type": "text",
+								"value": "{{adminToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/applications/{{application_MyFirstApp}}/credentials/oauth2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"applications",
+								"{{application_MyFirstApp}}",
+								"credentials",
+								"oauth2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Application Instances",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"console.log('Application: ' + jsonResponse.name);",
+									"postman.setEnvironmentVariable(\"application_\"+jsonResponse.name, jsonResponse.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"type": "text",
+								"value": "{{adminToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/applications/{{application_MyFirstApp}}/application_instances",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"applications",
+								"{{application_MyFirstApp}}",
+								"application_instances"
 							]
 						}
 					},
