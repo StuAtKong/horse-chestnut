@@ -345,13 +345,14 @@
 									"",
 									"// Create a Postman env variable for each Route",
 									"jsonResponse.data.forEach(function (routeDetails) {",
-									"    ",
-									"    ",
-									"    if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
-									"      console.log('Route: ' + routeDetails.id);",
+									"  if (routeDetails.name !== \"\") ",
+									"    {",
+									"      postman.setEnvironmentVariable(\"route_\"+routeDetails.name, routeDetails.id);",
 									"    }",
-									"",
-									"  postman.setEnvironmentVariable(\"route_\"+routeDetails.id, routeDetails.id);",
+									"  else",
+									"    {",
+									"      postman.setEnvironmentVariable(\"route_\"+routeDetails.id, routeDetails.id);",
+									"    }",
 									"})"
 								],
 								"type": "text/javascript"
@@ -1631,6 +1632,61 @@
 								"routes",
 								"{{route_33dbdb38-5ff5-4273-9ec1-095b9122c5b8}}",
 								"plugins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Global proxy-cache plugin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"/*",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"proxy-cache\",\n    \"config\": {\n        \"request_method\": [\n            \"GET\",\n            \"HEAD\"\n        ],\n        \"cache_control\": false,\n        \"vary_query_params\": null,\n        \"storage_ttl\": null,\n        \"response_code\": [\n            200,\n            301,\n            404\n        ],\n        \"cache_ttl\": 300,\n        \"vary_headers\": null,\n        \"strategy\": \"memory\",\n        \"content_type\": [\n            \"text/plain\",\n            \"application/json\"\n        ],\n        \"memory\": {\n            \"dictionary_name\": \"kong_db_cache\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/plugins/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"plugins",
+								""
 							]
 						}
 					},
@@ -4095,6 +4151,109 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Add OIDC Plugin to Route",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for the plugin\",",
+									"postman.setEnvironmentVariable(\"plugin_\"+jsonResponse.id, jsonResponse.id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"openid-connect\",\n\t\"config\": {\n\t\t\"issuer\": \"http://keycloak.lan:8080/auth/realms/kong\",\n\t\t\"auth_methods\": [\n\t\t\t\"authorization_code\", \"session\"\n\t\t],\n\t\t\"client_id\": [\n\t\t\t\"kong\"\n\t\t],\n\t\t\"client_secret\": [\n\t\t\t\"3f904a4f-e13e-49f9-8654-e1637bbc335d\"\n\t\t],\n\t\t\"upstream_id_token_header\":\"x_id_token\",\n\t\t\"login_action\":\"response\",\n        \"login_tokens\":[\"tokens\"]\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/routes/{{route_OIDC-Echo}}/plugins",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"routes",
+								"{{route_OIDC-Echo}}",
+								"plugins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update OIDC Plugin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for the plugin\",",
+									"postman.setEnvironmentVariable(\"plugin_\"+jsonResponse.id, jsonResponse.id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"openid-connect\",\n\t\"config\": {\n\t\t\"issuer\": \"http://keycloak.lan:8080/auth/realms/kong\",\n\t\t\"auth_methods\": [\n\t\t\t\"authorization_code\", \"session\"\n\t\t],\n\t\t\"client_id\": [\n\t\t\t\"kong\"\n\t\t],\n\t\t\"client_secret\": [\n\t\t\t\"3f904a4f-e13e-49f9-8654-e1637bbc335d\"\n\t\t],\n\t\t\"upstream_id_token_header\":\"x_id_token\",\n\t\t\"login_action\":\"response\",\n        \"login_tokens\":[\"tokens\"]\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/plugins/{{plugin_ea7eac02-1eea-4952-b900-ed2f7200eb1f}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"plugins",
+								"{{plugin_ea7eac02-1eea-4952-b900-ed2f7200eb1f}}"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -5776,6 +5935,37 @@
 					"port": "{{adminPort}}",
 					"path": [
 						"metrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Kong Endpoints",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Kong-Admin-Token",
+						"value": "{{adminToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}:{{adminPort}}/endpoints",
+					"host": [
+						"{{baseURL}}"
+					],
+					"port": "{{adminPort}}",
+					"path": [
+						"endpoints"
 					]
 				}
 			},
