@@ -5872,7 +5872,7 @@
 			"name": "Event-Hooks",
 			"item": [
 				{
-					"name": "Kong Event Hooks",
+					"name": "Get All Kong Event Hooks",
 					"event": [
 						{
 							"listen": "test",
@@ -5920,42 +5920,142 @@
 					"response": []
 				},
 				{
-					"name": "Test Event Hooks",
+					"name": "Get All Kong Event Hooks Sources",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5004e3ef-4376-4dfe-a71a-a2a175668e9d",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [
 							{
 								"key": "Kong-Admin-Token",
 								"value": "{{adminToken}}",
 								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n \t\"consumer\": {\n \t\t\"username\": \"hello world\"\n \t},\n \t\"event\": \"rate-limit-exceeded\",\n \t\"rate\": \"10\",\n \t\"service\": {\n \t\t\"host\": \"example.com\",\n \t\t\"name\": \"example\"\n \t},\n \t\"source\": \"rate-limiting-advanced\",\n \t\"window\": \"minute\"\n }"
+							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/event-hooks/{{hook_13a54586-b0ac-41bc-a607-914cbc5ced37}}/test",
+							"raw": "{{baseURL}}:{{adminPort}}/event-hooks/sources",
 							"host": [
 								"{{baseURL}}"
 							],
 							"port": "{{adminPort}}",
 							"path": [
 								"event-hooks",
-								"{{hook_13a54586-b0ac-41bc-a607-914cbc5ced37}}",
-								"test"
+								"sources"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create Event Hook",
+					"name": "Get Kong Event Hooks Source",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5004e3ef-4376-4dfe-a71a-a2a175668e9d",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/event-hooks/sources/balancer",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"event-hooks",
+								"sources",
+								"balancer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Kong Event Hooks Source Event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5004e3ef-4376-4dfe-a71a-a2a175668e9d",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/event-hooks/sources/balancer/health",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"event-hooks",
+								"sources",
+								"balancer",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create RL Slack Event Hook",
 					"event": [
 						{
 							"listen": "test",
@@ -5987,7 +6087,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"event\": \"rate-limit-exceeded\",\n\t\"source\": \"rate-limiting-advanced\",\n\t\"handler\": \"webhook-custom\",\n\t\"snooze\": null,\n\t\"on_change\": null,\n\t\"config\": {\n\t\t\"body_format\": true,\n\t\t\"method\": \"POST\",\n\t\t\"secret\": null,\n\t\t\"payload_format\": true,\n\t\t\"headers_format\": false,\n\t\t\"payload\": {\n\t\t\t\"text\": \"Consumer `{{ consumer.username }}` has exceeded the rate limit of {{ rate }} requests per {{ window }} on service {{ service.name }} ({{ service.host }})\"\n\t\t},\n\t\t\"url\": \"https://hooks.slack.com/services/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\",\n\t\t\"headers\": {\n\t\t\t\"content-type\": \"application/json\"\n\t\t},\n\t\t\"body\": null,\n\t\t\"ssl_verify\": false\n\t}\n}"
+							"raw": "{\n\t\"event\": \"rate-limit-exceeded\",\n\t\"source\": \"rate-limiting-advanced\",\n\t\"handler\": \"webhook-custom\",\n\t\"snooze\": null,\n\t\"on_change\": null,\n\t\"config\": {\n\t\t\"body_format\": true,\n\t\t\"method\": \"POST\",\n\t\t\"secret\": null,\n\t\t\"payload_format\": true,\n\t\t\"headers_format\": false,\n\t\t\"payload\": {\n\t\t\t\"text\": \"Consumer `{{ consumer.username }}` has exceeded the rate limit of {{ rate }} requests per {{ window }} on service {{ service.name }} ({{ service.host }})\"\n\t\t},\n\t\t\"url\": \"{{slack_webhook_url}}\",\n\t\t\"headers\": {\n\t\t\t\"content-type\": \"application/json\"\n\t\t},\n\t\t\"body\": null,\n\t\t\"ssl_verify\": false\n\t}\n}"
 						},
 						"url": {
 							"raw": "{{baseURL}}:{{adminPort}}/event-hooks",
@@ -5997,6 +6097,162 @@
 							"port": "{{adminPort}}",
 							"path": [
 								"event-hooks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test RL Event Hook",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n \t\"consumer\": {\n \t\t\"username\": \"hello world\"\n \t},\n \t\"event\": \"rate-limit-exceeded\",\n \t\"rate\": \"10\",\n \t\"service\": {\n \t\t\"host\": \"example.com\",\n \t\t\"name\": \"example\"\n \t},\n \t\"source\": \"rate-limiting-advanced\",\n \t\"window\": \"minute\"\n }"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/event-hooks/{{hook_bf458b97-a1bf-43f4-854e-e1d2b5dfbaf7}}/test",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"event-hooks",
+								"{{hook_bf458b97-a1bf-43f4-854e-e1d2b5dfbaf7}}",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Balancer Slack Event Hook",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e9b2638-1674-443b-bffd-f321c0f1a550",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for  hook",
+									"postman.setEnvironmentVariable(\"hook_\"+jsonResponse.id, jsonResponse.id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"source\": \"balancer\",\n\t\"event\": \"health\",\n\t\"handler\": \"webhook-custom\",\n\t\"snooze\": null,\n\t\"on_change\": null,\n\t\"config\": {\n\t\t\"body_format\": true,\n\t\t\"method\": \"POST\",\n\t\t\"secret\": null,\n\t\t\"payload_format\": true,\n\t\t\"headers_format\": false,\n\t\t\"payload\": {\n\t\t\t\"text\": \"Balancer `{{ upstream_id }}` {{health}}\"\n\t\t},\n\t\t\"url\": \"https://hooks.slack.com/services/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\",\n\t\t\"headers\": {\n\t\t\t\"content-type\": \"application/json\"\n\t\t},\n\t\t\"body\": null,\n\t\t\"ssl_verify\": false\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/event-hooks",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"event-hooks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Balancer Event Hook",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n \t\"source\": \"balancer\",\n \t\"event\": \"health\",\n \t\"health\": \"new health\",\n \t\"upstream_id\": \"id\"\n }"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/event-hooks/{{hook_48c95bbc-227f-4e51-b094-fcd78f0f2af6}}/test",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"event-hooks",
+								"{{hook_48c95bbc-227f-4e51-b094-fcd78f0f2af6}}",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ping Event Hook",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"type": "text",
+								"value": "{{adminToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n \t\"consumer\": {\n \t\t\"username\": \"hello world\"\n \t},\n \t\"event\": \"rate-limit-exceeded\",\n \t\"rate\": \"10\",\n \t\"service\": {\n \t\t\"host\": \"example.com\",\n \t\t\"name\": \"example\"\n \t},\n \t\"source\": \"rate-limiting-advanced\",\n \t\"window\": \"minute\"\n }"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/event-hooks/{{hook_13a54586-b0ac-41bc-a607-914cbc5ced37}}/ping",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"event-hooks",
+								"{{hook_13a54586-b0ac-41bc-a607-914cbc5ced37}}",
+								"ping"
 							]
 						}
 					},
