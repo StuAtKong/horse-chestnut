@@ -1691,6 +1691,90 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Create exit-transformer plugin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "post-function",
+									"type": "text"
+								},
+								{
+									"key": "config.header_filter",
+									"type": "file",
+									"src": "/Users/sroberts/Documents/Cases/00017164/serverless.lua"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/routes/Slow/plugins",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"routes",
+								"Slow",
+								"plugins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create response-transformer-advanced plugin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "exit-transformer",
+									"type": "text"
+								},
+								{
+									"key": "config.functions",
+									"type": "file",
+									"src": "/Users/sroberts/Documents/Cases/00017164/exit-transformer.lua"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/routes/Slow/plugins",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"routes",
+								"Slow",
+								"plugins"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -5785,6 +5869,168 @@
 			"protocolProfileBehavior": {}
 		},
 		{
+			"name": "Event-Hooks",
+			"item": [
+				{
+					"name": "Kong Event Hooks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5004e3ef-4376-4dfe-a71a-a2a175668e9d",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each hook",
+									"jsonResponse.data.forEach(function (eventHookDetails) {",
+									"  postman.setEnvironmentVariable(\"hook_\"+eventHookDetails.id, eventHookDetails.id);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/event-hooks",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"event-hooks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Event Hooks",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n \t\"consumer\": {\n \t\t\"username\": \"hello world\"\n \t},\n \t\"event\": \"rate-limit-exceeded\",\n \t\"rate\": \"10\",\n \t\"service\": {\n \t\t\"host\": \"example.com\",\n \t\t\"name\": \"example\"\n \t},\n \t\"source\": \"rate-limiting-advanced\",\n \t\"window\": \"minute\"\n }"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/event-hooks/{{hook_13a54586-b0ac-41bc-a607-914cbc5ced37}}/test",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"event-hooks",
+								"{{hook_13a54586-b0ac-41bc-a607-914cbc5ced37}}",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Event Hook",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "30ca0fa2-770b-4c08-95be-035c9d0aa215",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for  hook",
+									"postman.setEnvironmentVariable(\"hook_\"+jsonResponse.id, jsonResponse.id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"event\": \"rate-limit-exceeded\",\n\t\"source\": \"rate-limiting-advanced\",\n\t\"handler\": \"webhook-custom\",\n\t\"snooze\": null,\n\t\"on_change\": null,\n\t\"config\": {\n\t\t\"body_format\": true,\n\t\t\"method\": \"POST\",\n\t\t\"secret\": null,\n\t\t\"payload_format\": true,\n\t\t\"headers_format\": false,\n\t\t\"payload\": {\n\t\t\t\"text\": \"Consumer `{{ consumer.username }}` has exceeded the rate limit of {{ rate }} requests per {{ window }} on service {{ service.name }} ({{ service.host }})\"\n\t\t},\n\t\t\"url\": \"https://hooks.slack.com/services/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\",\n\t\t\"headers\": {\n\t\t\t\"content-type\": \"application/json\"\n\t\t},\n\t\t\"body\": null,\n\t\t\"ssl_verify\": false\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/event-hooks",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"event-hooks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Event Hook",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/event-hooks/{{hook_1e6a33f6-fbfb-4294-bfb8-6df78c596550}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"event-hooks",
+								"{{hook_1e6a33f6-fbfb-4294-bfb8-6df78c596550}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
 			"name": "Kong Status",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -5966,6 +6212,31 @@
 					"port": "{{adminPort}}",
 					"path": [
 						"endpoints"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Kong License",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Kong-Admin-Token",
+						"value": "{{adminToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}:{{adminPort}}/license/report",
+					"host": [
+						"{{baseURL}}"
+					],
+					"port": "{{adminPort}}",
+					"path": [
+						"license",
+						"report"
 					]
 				}
 			},
