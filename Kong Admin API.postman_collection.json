@@ -6170,7 +6170,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"source\": \"balancer\",\n\t\"event\": \"health\",\n\t\"handler\": \"webhook-custom\",\n\t\"snooze\": null,\n\t\"on_change\": null,\n\t\"config\": {\n\t\t\"body_format\": true,\n\t\t\"method\": \"POST\",\n\t\t\"secret\": null,\n\t\t\"payload_format\": true,\n\t\t\"headers_format\": false,\n\t\t\"payload\": {\n\t\t\t\"text\": \"Balancer `{{ upstream_id }}` {{health}}\"\n\t\t},\n\t\t\"url\": \"https://hooks.slack.com/services/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\",\n\t\t\"headers\": {\n\t\t\t\"content-type\": \"application/json\"\n\t\t},\n\t\t\"body\": null,\n\t\t\"ssl_verify\": false\n\t}\n}"
+							"raw": "{\n\t\"source\": \"balancer\",\n\t\"event\": \"health\",\n\t\"handler\": \"webhook-custom\",\n\t\"snooze\": null,\n\t\"on_change\": null,\n\t\"config\": {\n\t\t\"body_format\": true,\n\t\t\"method\": \"POST\",\n\t\t\"secret\": null,\n\t\t\"payload_format\": true,\n\t\t\"headers_format\": false,\n\t\t\"payload\": {\n\t\t\t\"text\": \"Balancer `{{ upstream_id }}` {{health}}\"\n\t\t},\n\t\t\"url\": \"{{slack_webhook_url}}\",\n\t\t\"headers\": {\n\t\t\t\"content-type\": \"application/json\"\n\t\t},\n\t\t\"body\": null,\n\t\t\"ssl_verify\": false\n\t}\n}"
 						},
 						"url": {
 							"raw": "{{baseURL}}:{{adminPort}}/event-hooks",
