@@ -3743,360 +3743,6 @@
 			]
 		},
 		{
-			"name": "OAuth Demo",
-			"item": [
-				{
-					"name": "Add Service",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Kong-Admin-Token",
-								"value": "{{adminToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "mock-service",
-									"type": "text"
-								},
-								{
-									"key": "url",
-									"value": "http://mockbin.org/request",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/services",
-							"host": [
-								"{{baseURL}}"
-							],
-							"port": "{{adminPort}}",
-							"path": [
-								"{{workspace}}",
-								"services"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Add Route",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Kong-Admin-Token",
-								"value": "{{adminToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "hosts[]",
-									"value": "mockbin.org",
-									"type": "text"
-								},
-								{
-									"key": "paths[]",
-									"value": "/mock",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/services/mock-service/routes",
-							"host": [
-								"{{baseURL}}"
-							],
-							"port": "{{adminPort}}",
-							"path": [
-								"{{workspace}}",
-								"services",
-								"mock-service",
-								"routes"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Call API",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Host",
-								"value": "mockbin.org"
-							},
-							{
-								"key": "Authorization",
-								"value": "bearer BjQMIzf2cgzZnGb0IwZillsgWhOxkTmb",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "http://127.0.0.1:8000/mock",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"mock"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Add OAuth2 Plugin",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Kong-Admin-Token",
-								"value": "{{adminToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "oauth2",
-									"type": "text"
-								},
-								{
-									"key": "config.scopes",
-									"value": "email, phone, address",
-									"type": "text"
-								},
-								{
-									"key": "config.mandatory_scope",
-									"value": "true",
-									"type": "text"
-								},
-								{
-									"key": "config.enable_authorization_code",
-									"value": "true",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/services/mock-service/plugins/",
-							"host": [
-								"{{baseURL}}"
-							],
-							"port": "{{adminPort}}",
-							"path": [
-								"{{workspace}}",
-								"services",
-								"mock-service",
-								"plugins",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Consumer",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Kong-Admin-Token",
-								"value": "{{adminToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "username",
-									"value": "thefosk",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/consumers/",
-							"host": [
-								"{{baseURL}}"
-							],
-							"port": "{{adminPort}}",
-							"path": [
-								"{{workspace}}",
-								"consumers",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create OAuth2 Application",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Kong-Admin-Token",
-								"value": "{{adminToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "Hello World App",
-									"type": "text"
-								},
-								{
-									"key": "redirect_uri",
-									"value": "http://konghq.com/",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/consumers/thefosk/oauth2/",
-							"host": [
-								"{{baseURL}}"
-							],
-							"port": "{{adminPort}}",
-							"path": [
-								"{{workspace}}",
-								"consumers",
-								"thefosk",
-								"oauth2",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get OAuth2 Apps",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Kong-Admin-Token",
-								"value": "{{adminToken}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"client_id\":\"viJ8dMD6rCpk27olm0kBvoL36JIunsph\"}"
-						},
-						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/oauth2",
-							"host": [
-								"{{baseURL}}"
-							],
-							"port": "{{adminPort}}",
-							"path": [
-								"{{workspace}}",
-								"oauth2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Access Token",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Host",
-								"value": "mockbin.org"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "grant_type",
-									"value": "authorization_code",
-									"type": "text"
-								},
-								{
-									"key": "client_id",
-									"value": "viJ8dMD6rCpk27olm0kBvoL36JIunsph",
-									"type": "text"
-								},
-								{
-									"key": "client_secret",
-									"value": "Aq2U7Sz6UCsLs9IWA17xNWQPnWPWFPHw",
-									"type": "text"
-								},
-								{
-									"key": "redirect_uri",
-									"value": "http://konghq.com/",
-									"type": "text"
-								},
-								{
-									"key": "code",
-									"value": "qKS9j2tl3ANzzAs1mlU9SvocS1f3GAuH",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "https://127.0.0.1:8443/mock/oauth2/token",
-							"protocol": "https",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8443",
-							"path": [
-								"mock",
-								"oauth2",
-								"token"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "OIDC",
 			"item": [
 				{
@@ -4710,6 +4356,125 @@
 								"consumers",
 								"0oa45a7gwH65pEbhf4x6",
 								"acls"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Consumer KeyAuth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Service",
+									"jsonResponse.data.forEach(function (consumerDetails) {",
+									"  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"    console.log('Service: ' + serviceDetails.domain);",
+									"  }",
+									"  postman.setEnvironmentVariable(\"consumer_\"+consumerDetails.username, consumerDetails.id);",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/consumers/consA/key-auth/4dee288e-5b19-4aba-9aae-977e43773f56",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"consumers",
+								"consA",
+								"key-auth",
+								"4dee288e-5b19-4aba-9aae-977e43773f56"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Consumer KeyAuth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Service",
+									"jsonResponse.data.forEach(function (consumerDetails) {",
+									"  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"    console.log('Service: ' + serviceDetails.domain);",
+									"  }",
+									"  postman.setEnvironmentVariable(\"consumer_\"+consumerDetails.username, consumerDetails.id);",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"key\": \"abcdef\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/consumers/consA/key-auth/4dee288e-5b19-4aba-9aae-977e43773f56",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"consumers",
+								"consA",
+								"key-auth",
+								"4dee288e-5b19-4aba-9aae-977e43773f56"
 							]
 						}
 					},
@@ -6186,6 +5951,55 @@
 					"response": []
 				},
 				{
+					"name": "Update Balancer Slack Event Hook",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e9b2638-1674-443b-bffd-f321c0f1a550",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for  hook",
+									"postman.setEnvironmentVariable(\"hook_\"+jsonResponse.id, jsonResponse.id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"source\": \"balancer\",\n\t\"event\": \"health\",\n\t\"handler\": \"webhook-custom\",\n\t\"snooze\": null,\n\t\"on_change\": null,\n\t\"config\": {\n\t\t\"body_format\": true,\n\t\t\"method\": \"POST\",\n\t\t\"secret\": null,\n\t\t\"payload_format\": true,\n\t\t\"headers_format\": false,\n\t\t\"payload\": {\n\t\t\t\"text\": \"Balancer `{{ upstream_id }}` {{health}} {{hostname}} {{ip}} {{port}}\"\n\t\t},\n\t\t\"url\": \"{{slack_webhook_url}}\",\n\t\t\"headers\": {\n\t\t\t\"content-type\": \"application/json\"\n\t\t},\n\t\t\"body\": null,\n\t\t\"ssl_verify\": false\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/event-hooks/{{hook_8bf5b368-00d2-4ef6-8cfd-548d14af1bf3}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"event-hooks",
+								"{{hook_8bf5b368-00d2-4ef6-8cfd-548d14af1bf3}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Test Balancer Event Hook",
 					"request": {
 						"method": "POST",
@@ -6203,17 +6017,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n \t\"source\": \"balancer\",\n \t\"event\": \"health\",\n \t\"health\": \"new health\",\n \t\"upstream_id\": \"id\"\n }"
+							"raw": " {\n \t\"source\": \"balancer\",\n \t\"event\": \"health\",\n \t\"health\": \"new health\",\n \t\"upstream_id\": \"id\",\n \t\"hostname\": \"thishost.com\",\n \t\"ip\": \"1.1.1.1\",\n \t\"port\": 3030\n }"
 						},
 						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/event-hooks/{{hook_48c95bbc-227f-4e51-b094-fcd78f0f2af6}}/test",
+							"raw": "{{baseURL}}:{{adminPort}}/event-hooks/{{hook_8bf5b368-00d2-4ef6-8cfd-548d14af1bf3}}/test",
 							"host": [
 								"{{baseURL}}"
 							],
 							"port": "{{adminPort}}",
 							"path": [
 								"event-hooks",
-								"{{hook_48c95bbc-227f-4e51-b094-fcd78f0f2af6}}",
+								"{{hook_8bf5b368-00d2-4ef6-8cfd-548d14af1bf3}}",
 								"test"
 							]
 						}
@@ -6278,6 +6092,607 @@
 							"path": [
 								"event-hooks",
 								"{{hook_1e6a33f6-fbfb-4294-bfb8-6df78c596550}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Examples",
+			"item": [
+				{
+					"name": "Proxy AdminAPI",
+					"item": [
+						{
+							"name": "Create AdminAPI Service",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+										"exec": [
+											"var jsonResponse = JSON.parse(responseBody);",
+											"",
+											"// Create a Postman env variable for the service",
+											"//console.log('Service: ' + jsonResponse.name);",
+											"postman.setEnvironmentVariable(\"service_\"+ jsonResponse.name, jsonResponse.name);",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Kong-Admin-Token",
+										"type": "text",
+										"value": "{{adminToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"host\": \"0.0.0.0\",\n    \"protocol\": \"https\",\n    \"name\": \"ProxyAdminAPI\",\n    \"port\": 18444\n}"
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/services",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"services"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create AdminAPI Route",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Kong-Admin-Token",
+										"value": "{{adminToken}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"strip_path\": true,\n\t\"paths\": [\"/adminapi\"],\n\t\"protocols\": [\"https\"],\n\t\"service\": \"ProxyAdminAPI\",\n\t\"name\": \"ProxyAdminAPI\"\n}"
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/services/{{service_ProxyAdminAPI}}/routes",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"services",
+										"{{service_ProxyAdminAPI}}",
+										"routes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Kong-Admin-Token header on Route",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+										"exec": [
+											"var jsonResponse = JSON.parse(responseBody);",
+											"",
+											"// Create a Postman env variable for each CH app\",",
+											"/*",
+											"jsonResponse.data.forEach(function (pluginDetails) {",
+											"  console.log('Route: ' + pluginDetails.domain);",
+											"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+											"})",
+											"*/"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Kong-Admin-Token",
+										"value": "{{adminToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"request-transformer-advanced\",\n    \"config\": {\n        \"add\": {\n            \"headers\": [\n                \"kong-admin-token:my-token\"\n            ]\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/routes/{{route_ProxyAdminAPI}}/plugins/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"routes",
+										"{{route_ProxyAdminAPI}}",
+										"plugins",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "OAuth Demo",
+					"item": [
+						{
+							"name": "Add Service",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Kong-Admin-Token",
+										"value": "{{adminToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "mock-service",
+											"type": "text"
+										},
+										{
+											"key": "url",
+											"value": "http://mockbin.org/request",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/services",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"services"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Route",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Kong-Admin-Token",
+										"value": "{{adminToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "hosts[]",
+											"value": "mockbin.org",
+											"type": "text"
+										},
+										{
+											"key": "paths[]",
+											"value": "/mock",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/services/mock-service/routes",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"services",
+										"mock-service",
+										"routes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Call API",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Host",
+										"value": "mockbin.org"
+									},
+									{
+										"key": "Authorization",
+										"value": "bearer BjQMIzf2cgzZnGb0IwZillsgWhOxkTmb",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/mock",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"mock"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add OAuth2 Plugin",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Kong-Admin-Token",
+										"value": "{{adminToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "oauth2",
+											"type": "text"
+										},
+										{
+											"key": "config.scopes",
+											"value": "email, phone, address",
+											"type": "text"
+										},
+										{
+											"key": "config.mandatory_scope",
+											"value": "true",
+											"type": "text"
+										},
+										{
+											"key": "config.enable_authorization_code",
+											"value": "true",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/services/mock-service/plugins/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"services",
+										"mock-service",
+										"plugins",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Consumer",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Kong-Admin-Token",
+										"value": "{{adminToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "thefosk",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/consumers/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"consumers",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create OAuth2 Application",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Kong-Admin-Token",
+										"value": "{{adminToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Hello World App",
+											"type": "text"
+										},
+										{
+											"key": "redirect_uri",
+											"value": "http://konghq.com/",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/consumers/thefosk/oauth2/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"consumers",
+										"thefosk",
+										"oauth2",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get OAuth2 Apps",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Kong-Admin-Token",
+										"value": "{{adminToken}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"client_id\":\"viJ8dMD6rCpk27olm0kBvoL36JIunsph\"}"
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/oauth2",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"oauth2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Access Token",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Host",
+										"value": "mockbin.org"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "authorization_code",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "viJ8dMD6rCpk27olm0kBvoL36JIunsph",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "Aq2U7Sz6UCsLs9IWA17xNWQPnWPWFPHw",
+											"type": "text"
+										},
+										{
+											"key": "redirect_uri",
+											"value": "http://konghq.com/",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "qKS9j2tl3ANzzAs1mlU9SvocS1f3GAuH",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://127.0.0.1:8443/mock/oauth2/token",
+									"protocol": "https",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8443",
+									"path": [
+										"mock",
+										"oauth2",
+										"token"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "OAS Config",
+			"item": [
+				{
+					"name": "Create OAS Config",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"type": "text",
+								"value": "{{adminToken}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "spec",
+									"type": "file",
+									"src": "/Users/sroberts/Documents/Cases/00017432/swagger.json"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/oas-config",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"oas-config"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update OAS Config",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"type": "text",
+								"value": "{{adminToken}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "spec",
+									"type": "file",
+									"src": "/Users/sroberts/Documents/Cases/00017432/swagger.json"
+								},
+								{
+									"key": "recreate_routes",
+									"value": "true",
+									"type": "text"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/oas-config",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"oas-config"
 							]
 						}
 					},
@@ -6493,6 +6908,54 @@
 					"path": [
 						"license",
 						"report"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Kong Sessions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5004e3ef-4376-4dfe-a71a-a2a175668e9d",
+						"exec": [
+							"var jsonResponse = JSON.parse(responseBody);",
+							"",
+							"// Create a Postman env variable for each hook",
+							"jsonResponse.data.forEach(function (eventHookDetails) {",
+							"  postman.setEnvironmentVariable(\"hook_\"+eventHookDetails.id, eventHookDetails.id);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Kong-Admin-Token",
+						"value": "{{adminToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}:{{adminPort}}/sessions",
+					"host": [
+						"{{baseURL}}"
+					],
+					"port": "{{adminPort}}",
+					"path": [
+						"sessions"
 					]
 				}
 			},
