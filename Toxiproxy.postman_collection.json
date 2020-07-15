@@ -2,18 +2,63 @@
 	"info": {
 		"_postman_id": "4fa8c164-34e7-41e4-a61b-71be93a66ae1",
 		"name": "Toxiproxy",
+		"description": "https://github.com/Shopify/toxiproxy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Get Version",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8474/version",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8474",
+					"path": [
+						"version"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"name\":\"latency_downstream\",\n   \"type\":\"latency\",\n   \"stream\":\"downstream\",\n   \"toxicity\":1,\n   \"attributes\":{\n      \"latency\":150,\n      \"jitter\":0\n   }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8474/reset",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8474",
+					"path": [
+						"reset"
+					]
+				}
+			},
+			"response": []
+		},
 		{
 			"name": "Get All Proxies",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8474/proxies",
 					"protocol": "http",
@@ -33,34 +78,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://localhost:8474/proxies/cisco_postgres",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8474",
-					"path": [
-						"proxies",
-						"cisco_postgres"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Proxy",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8474/proxies/cisco_postgres",
 					"protocol": "http",
@@ -106,14 +123,10 @@
 			"response": []
 		},
 		{
-			"name": "Get Proxy Toxics",
+			"name": "Delete Proxy",
 			"request": {
-				"method": "GET",
+				"method": "DELETE",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8474/proxies/cisco_postgres",
 					"protocol": "http",
@@ -124,6 +137,61 @@
 					"path": [
 						"proxies",
 						"cisco_postgres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Proxy Toxics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8474/proxies/cisco_postgres",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8474",
+					"path": [
+						"proxies",
+						"cisco_postgres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Toxic",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"name\":\"latency_downstream\",\n   \"type\":\"latency\",\n   \"stream\":\"downstream\",\n   \"toxicity\":1,\n   \"attributes\":{\n      \"latency\":200,\n      \"jitter\":0\n   }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8474/proxies/cisco_postgres/toxics/latency_downstream",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8474",
+					"path": [
+						"proxies",
+						"cisco_postgres",
+						"toxics",
+						"latency_downstream"
 					]
 				}
 			},
@@ -142,7 +210,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n   \"name\":\"latency_downstream\",\n   \"type\":\"latency\",\n   \"stream\":\"downstream\",\n   \"toxicity\":1,\n   \"attributes\":{\n      \"latency\":200,\n      \"jitter\":0\n   }\n}"
+					"raw": "{\n   \"name\":\"latency_downstream\",\n   \"type\":\"latency\",\n   \"stream\":\"downstream\",\n   \"toxicity\":1,\n   \"attributes\":{\n      \"latency\":150,\n      \"jitter\":0\n   }\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8474/proxies/cisco_postgres/toxics",
@@ -159,6 +227,192 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Update Toxic",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"name\":\"latency_downstream\",\n   \"type\":\"latency\",\n   \"stream\":\"downstream\",\n   \"toxicity\":1,\n   \"attributes\":{\n      \"latency\":500,\n      \"jitter\":0\n   }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8474/proxies/cisco_postgres/toxics/latency_downstream",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8474",
+					"path": [
+						"proxies",
+						"cisco_postgres",
+						"toxics",
+						"latency_downstream"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Toxic",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"name\":\"latency_downstream\",\n   \"type\":\"latency\",\n   \"stream\":\"downstream\",\n   \"toxicity\":1,\n   \"attributes\":{\n      \"latency\":200,\n      \"jitter\":0\n   }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8474/proxies/cisco_postgres/toxics/latency_downstream",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8474",
+					"path": [
+						"proxies",
+						"cisco_postgres",
+						"toxics",
+						"latency_downstream"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Disable Proxy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"enabled\": false\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8474/proxies/cisco_healthcheck_2080",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8474",
+					"path": [
+						"proxies",
+						"cisco_healthcheck_2080"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Enable Proxy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"enabled\": true\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8474/proxies/cisco_healthcheck_2080",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8474",
+					"path": [
+						"proxies",
+						"cisco_healthcheck_2080"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Timeout Toxic",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"type\":\"timeout\",\n   \"stream\":\"downstream\",\n   \"toxicity\":0.5,\n   \"attributes\":{\n      \"timeout\":250\n   }\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8474/proxies/cisco_healthcheck_2080/toxics",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8474",
+					"path": [
+						"proxies",
+						"cisco_healthcheck_2080",
+						"toxics"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2ec0fe1d-4e0c-4b04-b2a6-d0377de894d9",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "68fc246e-b4c5-4fdc-b004-64e55c07b4e7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }

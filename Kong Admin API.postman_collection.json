@@ -21,7 +21,7 @@
 									"// Create a Postman env variable for each workspace,",
 									"jsonResponse.data.forEach(function (workspaceDetails) {",
 									"  console.log('Workspace: ' + workspaceDetails.domain);",
-									"  postman.setEnvironmentVariable(\"workspace_\"+workspaceDetails.name, workspaceDetails.id);",
+									"  postman.setEnvironmentVariable(\"workspace_\"+workspaceDetails.name, workspaceDetails.name);",
 									"})",
 									""
 								],
@@ -455,6 +455,115 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get Route",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Route",
+									"jsonResponse.data.forEach(function (routeDetails) {",
+									"  if (routeDetails.name !== \"\") ",
+									"    {",
+									"      postman.setEnvironmentVariable(\"route_\"+routeDetails.name, routeDetails.id);",
+									"    }",
+									"  else",
+									"    {",
+									"      postman.setEnvironmentVariable(\"route_\"+routeDetails.id, routeDetails.id);",
+									"    }",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/routes/{{route_LocalEcho}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"routes",
+								"{{route_LocalEcho}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Route",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Route",
+									"jsonResponse.data.forEach(function (routeDetails) {",
+									"  if (routeDetails.name !== \"\") ",
+									"    {",
+									"      postman.setEnvironmentVariable(\"route_\"+routeDetails.name, routeDetails.id);",
+									"    }",
+									"  else",
+									"    {",
+									"      postman.setEnvironmentVariable(\"route_\"+routeDetails.id, routeDetails.id);",
+									"    }",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"path_handling\": \"v1\",\n    \"paths\": [\n        \"/echo\"\n    ],\n    \"protocols\": [\n        \"http\"\n    ],\n    \"name\": \"LocalEcho\",\n    \"strip_path\": false,\n    \"preserve_host\": false,\n    \"regex_priority\": 0,\n    \"sources\": null\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/routes/{{route_LocalEcho}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"routes",
+								"{{route_LocalEcho}}"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -858,10 +967,15 @@
 								"key": "Kong-Admin-Token",
 								"value": "{{adminToken}}",
 								"type": "text"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache",
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/upstreams/{{upstream_httpbin-echo}}/health",
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/upstreams/{{upstream_toxiproxy-httpbin}}/health",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -869,7 +983,7 @@
 							"path": [
 								"{{workspace}}",
 								"upstreams",
-								"{{upstream_httpbin-echo}}",
+								"{{upstream_toxiproxy-httpbin}}",
 								"health"
 							]
 						}
@@ -981,7 +1095,7 @@
 					"response": []
 				},
 				{
-					"name": "Set Upstream Target Unhealthy",
+					"name": "Set Upstream Target UnHealthy",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -992,7 +1106,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/upstreams/{{upstream_upstream-B}}/targets/{{target_host-b.local:80}}/unhealthy",
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/upstreams/{{upstream_toxiproxy-httpbin}}/targets/{{target_10.0.10.1:2080}}/unhealthy",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -1000,9 +1114,9 @@
 							"path": [
 								"{{workspace}}",
 								"upstreams",
-								"{{upstream_upstream-B}}",
+								"{{upstream_toxiproxy-httpbin}}",
 								"targets",
-								"{{target_host-b.local:80}}",
+								"{{target_10.0.10.1:2080}}",
 								"unhealthy"
 							]
 						}
@@ -1050,6 +1164,51 @@
 							"mode": "raw",
 							"raw": "{\n\t\"hash_on\": \"none\",\n\t\"algorithm\": \"round-robin\",\n\t\"name\": \"guardian-myairtelapp\",\n\t\"host_header\": null,\n\t\"hash_fallback_header\": null,\n\t\"hash_fallback\": \"none\",\n\t\"hash_on_cookie\": null,\n\t\"healthchecks\": {\n\t\t\"active\": {\n\t\t\t\"unhealthy\": {\n\t\t\t\t\"http_statuses\": [429, 404, 500, 501, 502, 503, 504, 505],\n\t\t\t\t\"tcp_failures\": 0,\n\t\t\t\t\"timeouts\": 0,\n\t\t\t\t\"http_failures\": 0,\n\t\t\t\t\"interval\": 0\n\t\t\t},\n\t\t\t\"type\": \"http\",\n\t\t\t\"http_path\": \"/\",\n\t\t\t\"healthy\": {\n\t\t\t\t\"successes\": 0,\n\t\t\t\t\"interval\": 0,\n\t\t\t\t\"http_statuses\": [200, 302]\n\t\t\t},\n\t\t\t\"https_sni\": null,\n\t\t\t\"https_verify_certificate\": true,\n\t\t\t\"timeout\": 1,\n\t\t\t\"concurrency\": 10\n\t\t},\n\t\t\"passive\": {\n\t\t\t\"unhealthy\": {\n\t\t\t\t\"http_failures\": 0,\n\t\t\t\t\"http_statuses\": [429, 500, 503],\n\t\t\t\t\"tcp_failures\": 0,\n\t\t\t\t\"timeouts\": 0\n\t\t\t},\n\t\t\t\"type\": \"http\",\n\t\t\t\"healthy\": {\n\t\t\t\t\"successes\": 0,\n\t\t\t\t\"http_statuses\": [200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 300, 301, 302, 303, 304, 305, 306, 307, 308]\n\t\t\t}\n\t\t}\n\t},\n\t\"hash_on_cookie_path\": \"/\",\n\t\"tags\": null,\n\t\"hash_on_header\": null,\n\t\"slots\": 1000\n}"
 						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/upstreams",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"upstreams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Upstream",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8c973721-390d-4fd6-a9fe-a8c24b4bd625",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Route",
+									"jsonResponse.data.forEach(function (upstreamDetails) {",
+									"    ",
+									"  console.log('Route: ' + upstreamDetails.name);",
+									"",
+									"  postman.setEnvironmentVariable(\"upstream_\"+upstreamDetails.name, upstreamDetails.id);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/upstreams",
 							"host": [
@@ -1775,6 +1934,291 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Create request-validator plugin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"/*",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"request-validator\",\n\t\"config\": {\n\t\t\"allowed_content_types\": [\n\t\t\t\"application/json\"\n\t\t],\n\t\t\"body_schema\": \"{\\n    \\\"$schema\\\": \\\"http://json-schema.org/draft-04/schema\\\",\\n    \\\"type\\\": \\\"object\\\",\\n    \\\"properties\\\": {\\n\\n        \\\"startTime\\\": {\\n            \\\"type\\\": \\\"string\\\",\\n            \\\"format\\\": \\\"date-time\\\"\\n        }\\n\\n\\n    }, \\\"required\\\": [\\\"startTime\\\"]\\n}\\n\",\n\t\t\"version\": \"draft4\",\n\t\t\"verbose_response\": true\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/routes/{{route_json-validation}}/plugins/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"routes",
+								"{{route_json-validation}}",
+								"plugins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create request-validator plugin Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e3271a3-5b06-4464-a306-7c72e197d7f5",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"/*",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"request-validator\",\n\t\"config\": {\n\t\t\"allowed_content_types\": [\n\t\t\t\"application/json\"\n\t\t],\n\t\t\"body_schema\": \"{\\n    \\\"$schema\\\": \\\"http://json-schema.org/draft-04/schema\\\",\\n    \\\"type\\\": \\\"object\\\",\\n    \\\"properties\\\": {\\n\\n        \\\"startTime\\\": {\\n            \\\"type\\\": \\\"string\\\",\\n            \\\"format\\\": \\\"date-time\\\"\\n        }\\n\\n\\n    }, \\\"required\\\": [\\\"startTime\\\"]\\n}\\n\",\n\t\t\"version\": \"draft4\",\n\t\t\"verbose_response\": true\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/routes/{{route_json-validation}}/plugins/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"routes",
+								"{{route_json-validation}}",
+								"plugins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create request-validator plugin (queryparams)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e3271a3-5b06-4464-a306-7c72e197d7f5",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"/*",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"request-validator\",\n\t\"config\": {\n\t\t\"allowed_content_types\": [\n\t\t\t\"application/json\"\n\t\t],\n\t\t\"body_schema\": \"{\\n    \\\"$schema\\\": \\\"http://json-schema.org/draft-04/schema\\\",\\n    \\\"type\\\": \\\"object\\\",\\n    \\\"properties\\\": {\\n\\n        \\\"startTime\\\": {\\n            \\\"type\\\": \\\"string\\\",\\n            \\\"format\\\": \\\"date-time\\\"\\n        }\\n\\n\\n    }, \\\"required\\\": [\\\"startTime\\\"]\\n}\\n\",\n\t\t\"version\": \"draft4\",\n\t\t\"verbose_response\": false,\n\t\t\"parameter_schema\": [\n\t\t\t{\n\t\t\t\t\"style\":\"form\",\n\t\t\t\t\"required\": true,\n\t\t\t\t\"in\": \"query\",\n\t\t\t\t\"schema\":\"{\\\"type\\\": \\\"string\\\", \\\"pattern\\\": \\\"val1|val2|val3\\\"}\",\n\t\t\t\t\"explode\":true,\n\t\t\t\t\"name\":\"MarqueeuniqueKPIidentifier\"\n\t\t\t}\n\t\t]\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/routes/{{route_json-validation}}/plugins/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"routes",
+								"{{route_json-validation}}",
+								"plugins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add file-log Plugin to Route",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"/*",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"config\": {\n        \"path\": \"/tmp/kong-file-log.log\",\n        \"reopen\": true\n    },\n    \"name\": \"file-log\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/routes/{{route_Echo}}/plugins/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"routes",
+								"{{route_Echo}}",
+								"plugins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update file-log Plugin on Route",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"/*",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"config\": {\n        \"path\": \"kong-file-log.log\",\n        \"reopen\": true\n    },\n    \"name\": \"file-log\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/routes/{{route_Echo}}/plugins/0face1e0-ba2e-4936-8ec8-722e0ebced08",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"routes",
+								"{{route_Echo}}",
+								"plugins",
+								"0face1e0-ba2e-4936-8ec8-722e0ebced08"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -2020,6 +2464,246 @@
 			"name": "Dev Portal",
 			"item": [
 				{
+					"name": "Files",
+					"item": [
+						{
+							"name": "Get Files",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+										"exec": [
+											"var jsonResponse = JSON.parse(responseBody);",
+											"",
+											"// Create a Postman env variable for each CH app\",",
+											"jsonResponse.data.forEach(function (pluginDetails) {",
+											"  console.log('Route: ' + pluginDetails.domain);",
+											"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Kong-Admin-Token",
+										"value": "{{adminToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/files/themes/base/assets/images/bg-pattern.svg",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"files",
+										"themes",
+										"base",
+										"assets",
+										"images",
+										"bg-pattern.svg"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add File",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+										"exec": [
+											"var jsonResponse = JSON.parse(responseBody);",
+											"",
+											"// Create a Postman env variable for each CH app\",",
+											"/*",
+											"jsonResponse.data.forEach(function (pluginDetails) {",
+											"  console.log('Route: ' + pluginDetails.domain);",
+											"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+											"})",
+											"*/"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Kong-Admin-Token",
+										"value": "{{adminToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "petstore",
+											"type": "text"
+										},
+										{
+											"key": "type",
+											"value": "spec",
+											"type": "text"
+										},
+										{
+											"key": "contents",
+											"type": "file",
+											"src": "/Users/sroberts/Documents/OpenAPI-Specification/examples/v3.0/petstore.yaml"
+										},
+										{
+											"key": "auth",
+											"value": "true",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/files/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"files",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add a Spec File",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Kong-Admin-Token",
+										"value": "{{adminToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "path",
+											"value": "specs/petstore-test.yaml",
+											"type": "text"
+										},
+										{
+											"key": "contents",
+											"type": "file",
+											"src": "/Users/sroberts/Documents/OpenAPI-Specification/examples/v3.0/petstore.yaml"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/files",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"files"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a Spec File",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Kong-Admin-Token",
+										"value": "{{adminToken}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "path",
+											"value": "specs/petstore-test.yaml",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "contents",
+											"type": "file",
+											"src": "/Users/sroberts/Documents/OpenAPI-Specification/examples/v3.0/api-with-examples.yaml"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/files/8616a6dc-cf52-440e-984a-b240ae7cb794",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"files",
+										"8616a6dc-cf52-440e-984a-b240ae7cb794"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a Spec file",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Kong-Admin-Token",
+										"value": "{{adminToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/files/8d7c1a17-0206-4d54-a032-1e9ae049281a",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"files",
+										"8d7c1a17-0206-4d54-a032-1e9ae049281a"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "Enable Portal",
 					"event": [
 						{
@@ -2229,102 +2913,6 @@
 								"credentials",
 								"oauth2",
 								"64819670-8002-4800-8656-4fe3a88e28aa"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Files",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
-								"exec": [
-									"var jsonResponse = JSON.parse(responseBody);",
-									"",
-									"// Create a Postman env variable for each CH app\",",
-									"jsonResponse.data.forEach(function (pluginDetails) {",
-									"  console.log('Route: ' + pluginDetails.domain);",
-									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Kong-Admin-Token",
-								"value": "{{adminToken}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/files/themes/base/assets/images/bg-pattern.svg",
-							"host": [
-								"{{baseURL}}"
-							],
-							"port": "{{adminPort}}",
-							"path": [
-								"{{workspace}}",
-								"files",
-								"themes",
-								"base",
-								"assets",
-								"images",
-								"bg-pattern.svg"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Add File",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
-								"exec": [
-									"var jsonResponse = JSON.parse(responseBody);",
-									"",
-									"// Create a Postman env variable for each CH app\",",
-									"jsonResponse.data.forEach(function (pluginDetails) {",
-									"  console.log('Route: ' + pluginDetails.domain);",
-									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Kong-Admin-Token",
-								"value": "{{adminToken}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/files/themes/base/assets/images/bg-pattern.svg",
-							"host": [
-								"{{baseURL}}"
-							],
-							"port": "{{adminPort}}",
-							"path": [
-								"{{workspace}}",
-								"files",
-								"themes",
-								"base",
-								"assets",
-								"images",
-								"bg-pattern.svg"
 							]
 						}
 					},
@@ -4095,15 +4683,15 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/consumers/{{consumer_consumserA}}",
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace_default}}/consumers/{{consumer_jwt-consumer}}",
 							"host": [
 								"{{baseURL}}"
 							],
 							"port": "{{adminPort}}",
 							"path": [
-								"{{workspace}}",
+								"{{workspace_default}}",
 								"consumers",
-								"{{consumer_consumserA}}"
+								"{{consumer_jwt-consumer}}"
 							]
 						}
 					},
@@ -4475,6 +5063,210 @@
 								"consA",
 								"key-auth",
 								"4dee288e-5b19-4aba-9aae-977e43773f56"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create JWT Creds",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "algorithm",
+									"value": "RS256",
+									"type": "text"
+								},
+								{
+									"key": "rsa_public_key",
+									"type": "file",
+									"src": "/Users/sroberts/Documents/Cases/00017634/pubkey.pem"
+								},
+								{
+									"key": "secret",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace_default}}/consumers/{{consumer_jwt-consumer}}/jwt",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace_default}}",
+								"consumers",
+								"{{consumer_jwt-consumer}}",
+								"jwt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get JWT Creds",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace_default}}/consumers/{{consumer_jwt-consumer}}/jwt",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace_default}}",
+								"consumers",
+								"{{consumer_jwt-consumer}}",
+								"jwt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create KeyAuth Creds",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"type": "text",
+								"value": "{{adminToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"key\":\"new-key\"}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace_default}}/consumers/{{consumer_consA}}/key-auth",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace_default}}",
+								"consumers",
+								"{{consumer_consA}}",
+								"key-auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update  JWT Creds",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "algorithm",
+									"value": "RS256",
+									"type": "text"
+								},
+								{
+									"key": "rsa_public_key",
+									"type": "file",
+									"src": "/Users/sroberts/Documents/Cases/00017634/pubkey.pem"
+								},
+								{
+									"key": "secret",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace_default}}/consumers/{{consumer_jwt-consumer}}/jwt/38034aff-cb34-4f17-92f0-85af1b3f3315",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace_default}}",
+								"consumers",
+								"{{consumer_jwt-consumer}}",
+								"jwt",
+								"38034aff-cb34-4f17-92f0-85af1b3f3315"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create BasicAuth Creds",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"type": "text",
+								"value": "{{adminToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"my-username\",\n\"password\":\"my-password\"}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace_docker-postgres}}/consumers/{{consumer_consA}}/basic-auth",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace_docker-postgres}}",
+								"consumers",
+								"{{consumer_consA}}",
+								"basic-auth"
 							]
 						}
 					},
@@ -5049,6 +5841,69 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Clear proxy-cache plugin entry",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/proxy-cache/b9359d3c72b6e11e7e82153ff7e4d1f5",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"proxy-cache",
+								"b9359d3c72b6e11e7e82153ff7e4d1f5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get proxy-cache plugin entry",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/proxy-cache/b9359d3c72b6e11e7e82153ff7e4d1f5",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"proxy-cache",
+								"b9359d3c72b6e11e7e82153ff7e4d1f5"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -5289,6 +6144,42 @@
 								{
 									"key": "interval",
 									"value": "seconds"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get status_code_classes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}:38444/default/vitals/status_code_classes?start_ts=1592797080&interval=minutes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "38444",
+							"path": [
+								"default",
+								"vitals",
+								"status_code_classes"
+							],
+							"query": [
+								{
+									"key": "start_ts",
+									"value": "1592797080"
+								},
+								{
+									"key": "interval",
+									"value": "minutes"
 								}
 							]
 						}
@@ -6720,13 +7611,23 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{baseURL}}:{{adminPort}}/status",
+					"raw": "{{baseURL}}:{{adminPort}}/status?unit=K&scale=4",
 					"host": [
 						"{{baseURL}}"
 					],
 					"port": "{{adminPort}}",
 					"path": [
 						"status"
+					],
+					"query": [
+						{
+							"key": "unit",
+							"value": "K"
+						},
+						{
+							"key": "scale",
+							"value": "4"
+						}
 					]
 				}
 			},
