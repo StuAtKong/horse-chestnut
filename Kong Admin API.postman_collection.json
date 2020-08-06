@@ -4377,6 +4377,16 @@
 							"script": {
 								"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
 								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Role",
+									"jsonResponse.data.forEach(function (roleDetails) {",
+									"  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"    console.log('Role: ' + roleDetails.name);",
+									"  }",
+									"  postman.setEnvironmentVariable(\"role_\"+roleDetails.name, roleDetails.id);",
+									"})",
+									"",
 									""
 								],
 								"type": "text/javascript"
@@ -4461,7 +4471,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/rbac/roles/super-admin/permissions",
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/rbac/roles/{{role_workspace-super-admin}}/permissions",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -4470,7 +4480,7 @@
 								"{{workspace}}",
 								"rbac",
 								"roles",
-								"super-admin",
+								"{{role_workspace-super-admin}}",
 								"permissions"
 							]
 						}
