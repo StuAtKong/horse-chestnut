@@ -2092,7 +2092,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"config\": {\n\t\t\"allowed_content_types\": [\n\t\t\t\"application/json\"\n\t\t],\n\t\t\"parameter_schema\": [{\n\t\t\t\"name\": \"startTime\",\n\t\t\t\"style\": \"form\",\n\t\t\t\"in\": \"query\",\n\t\t\t\"schema\": \"{\\\"maxItems\\\":10000,\\\"type\\\":\\\"array\\\",\\\"description\\\":\\\"First time for which to query dataset (inclusive)\\\",\\\"items\\\":{\\\"maxLength\\\":10000,\\\"minLength\\\":0,\\\"pattern\\\":\\\"^([12][0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\\\\\\\.[0-9]+)?(Z|(\\\\\\\\+|-)([01][0-9]|2[0-3]):([0-5][0-9]))$\\\",\\\"type\\\":\\\"string\\\",\\\"description\\\":\\\"ISO 8601-formatted timestamp\\\"}}\",\n\t\t\t\"required\": true\n\t\t}],\n\t\t\"body_schema\": null,\n\t\t\"version\": \"draft4\",\n\t\t\"verbose_response\": true\n\t},\n\t\"name\": \"request-validator\",\n\t\"enabled\": true\n}"
+							"raw": "{\n\t\"config\": {\n\t\t\"allowed_content_types\": [\n\t\t\t\"application/json\"\n\t\t],\n\t\t\"parameter_schema\": [{\n        \"name\": \"startTime\",\n        \"style\": \"form\",\n        \"in\": \"query\",\n        \"schema\": \"{\\\"maxItems\\\":1,\\\"minItems\\\":0,\\\"type\\\":\\\"array\\\",\\\"description\\\":\\\"First time for which to query dataset (inclusive)\\\",\\\"items\\\":{\\\"maxLength\\\":5000,\\\"minLength\\\":0,\\\"pattern\\\":\\\"^([12][0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\\\\\\\.[0-9]+)?(Z|(\\\\\\\\+|-)([01][0-9]|2[0-3]):([0-5][0-9]))$\\\",\\\"type\\\":\\\"string\\\",\\\"description\\\":\\\"ISO 8601-formatted timestamp\\\"}}\",\n        \"explode\": true,\n        \"required\": false\n}],\n\t\t\"body_schema\": null,\n\t\t\"version\": \"draft4\",\n\t\t\"verbose_response\": true\n\t},\n\t\"name\": \"request-validator\",\n\t\"enabled\": true\n}\n\n\n\n"
 						},
 						"url": {
 							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/routes/{{route_json-validation}}/plugins/",
@@ -7869,6 +7869,102 @@
 							"response": []
 						}
 					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "HMAC Auth",
+					"item": [
+						{
+							"name": "Call HMAC Protected Endpoint",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "8c8677d0-effb-4afa-944d-eae7a39e3d94",
+										"exec": [
+											"",
+											"var tsUTC = new Date().toUTCString();",
+											"var hmacSecret = \"secret123\"",
+											"var hmacMessage = \"date: \" + tsUTC + \"\\n\" + pm.request.method + \" /\" + pm.request.url.path[0] + \" HTTP/1.1\"",
+											"var hmac = CryptoJS.HmacSHA256(hmacMessage, hmacSecret);",
+											"var hmacBase64String = CryptoJS.enc.Base64.stringify(hmac);",
+											"",
+											"console.log(hmacMessage);",
+											"console.log(hmacBase64String);",
+											"",
+											"var HMAC_auth = \"hmac username=\\\"user1\\\", algorithm=\\\"hmac-sha256\\\", headers=\\\"date request-line\\\", signature=\\\"\" + hmacBase64String + \"\\\"\"",
+											"",
+											"postman.setEnvironmentVariable(\"hmacAuth\", HMAC_auth);",
+											"postman.setEnvironmentVariable('timestampUTC',tsUTC);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{hmacAuth}}"
+									},
+									{
+										"key": "Date",
+										"value": "{{timestampUTC}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://kong-proxy.heronwood.co.uk:18000/hmac",
+									"protocol": "http",
+									"host": [
+										"kong-proxy",
+										"heronwood",
+										"co",
+										"uk"
+									],
+									"port": "18000",
+									"path": [
+										"hmac"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Call HMAC Protected Endpoint 2",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Date",
+										"value": "Thu, 10 Sep 2020 05:33:21 GMT"
+									},
+									{
+										"key": "Authorization",
+										"value": "hmac username=\"user1\", algorithm=\"hmac-sha256\", headers=\"date request-line\", signature=\"JAk4NZAEguWXJ8I09Ouz21D/80Qae75OEDlX9BWetRA=\""
+									}
+								],
+								"url": {
+									"raw": "http://kong-proxy.heronwood.co.uk:18000/hmac",
+									"protocol": "http",
+									"host": [
+										"kong-proxy",
+										"heronwood",
+										"co",
+										"uk"
+									],
+									"port": "18000",
+									"path": [
+										"hmac"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
 				}
 			],
