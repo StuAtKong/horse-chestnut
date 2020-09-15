@@ -7875,6 +7875,245 @@
 					"name": "HMAC Auth",
 					"item": [
 						{
+							"name": "Create Consumer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+										"exec": [
+											"/*",
+											"var jsonResponse = JSON.parse(responseBody);",
+											"",
+											"// Create a Postman env variable for each Service",
+											"jsonResponse.data.forEach(function (serviceDetails) {",
+											"  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+											"    console.log('Service: ' + serviceDetails.domain);",
+											"  }",
+											"  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);",
+											"})",
+											"",
+											"*/"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Kong-Admin-Token",
+										"value": "{{adminToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"hmac-consumer\"\n}"
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/consumers/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"consumers",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Consumer HMACAuth Creds",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json;charset=UTF-8"
+									},
+									{
+										"key": "Kong-Admin-Token",
+										"type": "text",
+										"value": "{{adminToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"username\":\"hmac-username\",\n\"secret\":\"secret123\"}"
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/consumers/{{consumer_hmac-consumer}}/hmac-auth",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"consumers",
+										"{{consumer_hmac-consumer}}",
+										"hmac-auth"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Echo Service",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5d8c690d-4e83-4a9d-be81-87c9b36d1c67",
+										"exec": [
+											"var jsonResponse = JSON.parse(responseBody);",
+											"",
+											"// Create a Postman env variable for the service",
+											"//console.log('Service: ' + jsonResponse.name);",
+											"postman.setEnvironmentVariable(\"service_\"+ jsonResponse.name, jsonResponse.name);",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Kong-Admin-Token",
+										"value": "{{adminToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"host\":\"httpbin.org\",\n   \"protocol\":\"http\",\n   \"name\":\"hmac-service\",\n   \"port\":80,\n   \"path\":\"/anything\",\n   \"retries\":0\n}"
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/services",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"services"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Echo Route",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Kong-Admin-Token",
+										"value": "{{adminToken}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"strip_path\": true,\n\t\"path_handling\": \"v1\",\n\t\"paths\": [\"/hmac-echo\"],\n\t\"protocols\": [\"http\"],\n\t\"name\": \"hmacEcho-route\"\n}"
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/services/{{service_hmac-service}}/routes",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"services",
+										"{{service_hmac-service}}",
+										"routes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add hmac-auth Plugin to Route",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+										"exec": [
+											"var jsonResponse = JSON.parse(responseBody);",
+											"",
+											"// Create a Postman env variable for each CH app\",",
+											"/*",
+											"jsonResponse.data.forEach(function (pluginDetails) {",
+											"  console.log('Route: ' + pluginDetails.domain);",
+											"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+											"})",
+											"*/"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Kong-Admin-Token",
+										"value": "{{adminToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"hmac-auth\",\n            \"config\": {\n                \"clock_skew\": 60,\n                \"enforce_headers\": [\n                    \"date\",\n                    \"request-line\"\n                ],\n                \"algorithms\": [\n                    \"hmac-sha256\"\n                ],\n                \"hide_credentials\": true\n            }\n}"
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/routes/{{route_hmacEcho-route}}/plugins/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"routes",
+										"{{route_hmacEcho-route}}",
+										"plugins",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Call HMAC Protected Endpoint",
 							"event": [
 								{
@@ -7892,7 +8131,7 @@
 											"console.log(hmacMessage);",
 											"console.log(hmacBase64String);",
 											"",
-											"var HMAC_auth = \"hmac username=\\\"user1\\\", algorithm=\\\"hmac-sha256\\\", headers=\\\"date request-line\\\", signature=\\\"\" + hmacBase64String + \"\\\"\"",
+											"var HMAC_auth = \"hmac username=\\\"hmac-username\\\", algorithm=\\\"hmac-sha256\\\", headers=\\\"date request-line\\\", signature=\\\"\" + hmacBase64String + \"\\\"\"",
 											"",
 											"postman.setEnvironmentVariable(\"hmacAuth\", HMAC_auth);",
 											"postman.setEnvironmentVariable('timestampUTC',tsUTC);",
@@ -7916,7 +8155,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://kong-proxy.heronwood.co.uk:18000/hmac",
+									"raw": "http://kong-proxy.heronwood.co.uk:18000/hmac-echo",
 									"protocol": "http",
 									"host": [
 										"kong-proxy",
@@ -7926,38 +8165,7 @@
 									],
 									"port": "18000",
 									"path": [
-										"hmac"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Call HMAC Protected Endpoint 2",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Date",
-										"value": "Thu, 10 Sep 2020 05:33:21 GMT"
-									},
-									{
-										"key": "Authorization",
-										"value": "hmac username=\"user1\", algorithm=\"hmac-sha256\", headers=\"date request-line\", signature=\"JAk4NZAEguWXJ8I09Ouz21D/80Qae75OEDlX9BWetRA=\""
-									}
-								],
-								"url": {
-									"raw": "http://kong-proxy.heronwood.co.uk:18000/hmac",
-									"protocol": "http",
-									"host": [
-										"kong-proxy",
-										"heronwood",
-										"co",
-										"uk"
-									],
-									"port": "18000",
-									"path": [
-										"hmac"
+										"hmac-echo"
 									]
 								}
 							},
