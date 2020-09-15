@@ -8189,25 +8189,24 @@
 											"hmacHeaders.forEach(addHeader);",
 											"",
 											"function addHeader(header, index) {",
-											"    hmacHeaderString = hmacHeaderString + header.toLowerCase() + \" \";",
+											"    hmacHeaderString = hmacHeaderString + header.toLowerCase() + \" \"",
 											"    if (header.toLowerCase() == \"date\") {",
 											"      hmacMessage = hmacMessage + header.toLowerCase() + \": \" + tsUTC + \"\\n\"",
 											"    }",
 											"    else if (header.toLowerCase() == \"request-line\") {",
-											"      hmacMessage = hmacMessage + pm.request.method + \" /\" + pm.request.url.path[0] + \" HTTP/1.1\";",
+											"      hmacMessage = hmacMessage + pm.request.method + \" /\" + pm.request.url.path[0] + \" HTTP/1.1\\n\"",
 											"    }",
 											"    else",
 											"      hmacMessage = hmacMessage + header.toLowerCase() + \": \" + pm.request.headers.get(header) + \"\\n\"",
 											"    }",
 											"",
+											"// remove trailing newline",
+											"hmacMessage = hmacMessage.replace(/\\n$/, \"\")",
+											"",
 											"var hmac = CryptoJS.HmacSHA256(hmacMessage, hmacSecret);",
 											"var hmacBase64String = CryptoJS.enc.Base64.stringify(hmac);",
 											"",
-											"//console.log(\"hmacMessage:\\n\" + hmacMessage);",
-											"//console.log(\"hmacBase64String:\\n \" + hmacBase64String);",
-											"",
 											"var authParts = [\"hmac username=\\\"\"+credentialsUsername+\"\\\"\", \"algorithm=\\\"\"+hmacAlgorithm+\"\\\"\", \"headers=\\\"\"+ hmacHeaderString.trim() + \"\\\"\", \"signature=\\\"\" + hmacBase64String + \"\\\"\"];",
-											"//console.log(\"authParts: \" + authParts.toString());",
 											"",
 											"postman.setEnvironmentVariable(\"hmacAuth\", authParts.toString());",
 											"postman.setEnvironmentVariable('timestampUTC',tsUTC);",
@@ -8241,15 +8240,11 @@
 									}
 								],
 								"url": {
-									"raw": "http://kong-proxy.heronwood.co.uk:18000/hmac-echo",
-									"protocol": "http",
+									"raw": "{{baseURL}}:{{proxyPort}}/hmac-echo",
 									"host": [
-										"kong-proxy",
-										"heronwood",
-										"co",
-										"uk"
+										"{{baseURL}}"
 									],
-									"port": "18000",
+									"port": "{{proxyPort}}",
 									"path": [
 										"hmac-echo"
 									]
