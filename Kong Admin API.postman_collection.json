@@ -8094,7 +8094,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"hmac-auth\",\n            \"config\": {\n                \"clock_skew\": 60,\n                \"enforce_headers\": [\n                    \"date\",\n                    \"request-line\"\n                ],\n                \"algorithms\": [\n                    \"hmac-sha256\"\n                ],\n                \"hide_credentials\": true\n            }\n}"
+									"raw": "{\n    \"name\": \"hmac-auth\",\n            \"config\": {\n                \"clock_skew\": 600,\n                \"enforce_headers\": [\n                    \"date\",\n                    \"x-custom\",\n                    \"x-other-custom\",\n                    \"request-line\"\n                ],\n                \"algorithms\": [\n                    \"hmac-sha256\"\n                ],\n                \"hide_credentials\": true\n            }\n}"
 								},
 								"url": {
 									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/routes/{{route_hmacEcho-route}}/plugins/",
@@ -8114,6 +8114,61 @@
 							"response": []
 						},
 						{
+							"name": "Update hmac-auth Plugin on Route",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7d2075db-8933-49ff-afcc-b6f74f1df439",
+										"exec": [
+											"var jsonResponse = JSON.parse(responseBody);",
+											"",
+											"// Create a Postman env variable for each CH app\",",
+											"/*",
+											"jsonResponse.data.forEach(function (pluginDetails) {",
+											"  console.log('Route: ' + pluginDetails.domain);",
+											"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+											"})",
+											"*/"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Kong-Admin-Token",
+										"value": "{{adminToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"hmac-auth\",\n            \"config\": {\n                \"clock_skew\": 600,\n                \"enforce_headers\": [\n                    \"date\",\n                    \"x-custom\",\n                    \"x-other-custom\",\n                    \"request-line\"\n                ],\n                \"algorithms\": [\n                    \"hmac-sha256\"\n                ],\n                \"hide_credentials\": true\n            }\n}"
+								},
+								"url": {
+									"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/plugins/{{plugin_1f009977-9daa-410d-9a1f-d79487549bfd}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"port": "{{adminPort}}",
+									"path": [
+										"{{workspace}}",
+										"plugins",
+										"{{plugin_1f009977-9daa-410d-9a1f-d79487549bfd}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Call HMAC Protected Endpoint",
 							"event": [
 								{
@@ -8121,19 +8176,40 @@
 									"script": {
 										"id": "8c8677d0-effb-4afa-944d-eae7a39e3d94",
 										"exec": [
-											"",
 											"var tsUTC = new Date().toUTCString();",
-											"var hmacSecret = \"secret123\"",
-											"var hmacMessage = \"date: \" + tsUTC + \"\\n\" + pm.request.method + \" /\" + pm.request.url.path[0] + \" HTTP/1.1\"",
+											"var credentialsUsername = \"hmac-username\";",
+											"var hmacSecret = \"secret123\";",
+											"var hmacAlgorithm = \"hmac-sha256\"",
+											"var hmacHeaders = [\"date\", \"x-custom\",\"x-other-custom\", \"request-line\"]",
+											"//var hmacHeaders = [\"date\",\"request-line\"]",
+											"",
+											"var hmacMessage = \"\";",
+											"var hmacHeaderString = \"\";",
+											"",
+											"hmacHeaders.forEach(addHeader);",
+											"",
+											"function addHeader(header, index) {",
+											"    hmacHeaderString = hmacHeaderString + header.toLowerCase() + \" \";",
+											"    if (header.toLowerCase() == \"date\") {",
+											"      hmacMessage = hmacMessage + header.toLowerCase() + \": \" + tsUTC + \"\\n\"",
+											"    }",
+											"    else if (header.toLowerCase() == \"request-line\") {",
+											"      hmacMessage = hmacMessage + pm.request.method + \" /\" + pm.request.url.path[0] + \" HTTP/1.1\";",
+											"    }",
+											"    else",
+											"      hmacMessage = hmacMessage + header.toLowerCase() + \": \" + pm.request.headers.get(header) + \"\\n\"",
+											"    }",
+											"",
 											"var hmac = CryptoJS.HmacSHA256(hmacMessage, hmacSecret);",
 											"var hmacBase64String = CryptoJS.enc.Base64.stringify(hmac);",
 											"",
-											"console.log(hmacMessage);",
-											"console.log(hmacBase64String);",
+											"//console.log(\"hmacMessage:\\n\" + hmacMessage);",
+											"//console.log(\"hmacBase64String:\\n \" + hmacBase64String);",
 											"",
-											"var HMAC_auth = \"hmac username=\\\"hmac-username\\\", algorithm=\\\"hmac-sha256\\\", headers=\\\"date request-line\\\", signature=\\\"\" + hmacBase64String + \"\\\"\"",
+											"var authParts = [\"hmac username=\\\"\"+credentialsUsername+\"\\\"\", \"algorithm=\\\"\"+hmacAlgorithm+\"\\\"\", \"headers=\\\"\"+ hmacHeaderString.trim() + \"\\\"\", \"signature=\\\"\" + hmacBase64String + \"\\\"\"];",
+											"//console.log(\"authParts: \" + authParts.toString());",
 											"",
-											"postman.setEnvironmentVariable(\"hmacAuth\", HMAC_auth);",
+											"postman.setEnvironmentVariable(\"hmacAuth\", authParts.toString());",
 											"postman.setEnvironmentVariable('timestampUTC',tsUTC);",
 											""
 										],
@@ -8151,6 +8227,16 @@
 									{
 										"key": "Date",
 										"value": "{{timestampUTC}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Custom",
+										"value": "custom123",
+										"type": "text"
+									},
+									{
+										"key": "X-Other-Custom",
+										"value": "otherABC",
 										"type": "text"
 									}
 								],
