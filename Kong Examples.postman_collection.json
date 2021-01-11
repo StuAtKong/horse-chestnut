@@ -14,7 +14,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d1836b44-6510-4f98-aa82-fbf75579306f",
 								"exec": [
 									"var jsonResponse = JSON.parse(responseBody);",
 									"",
@@ -67,7 +66,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bd141cc4-a6ea-4eaf-945e-47eb7441b28c",
 								"exec": [
 									"var jsonResponse = JSON.parse(responseBody);",
 									"",
@@ -186,8 +184,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Proxy AdminAPI",
@@ -198,7 +195,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "48f28ad9-e312-4a16-9c6f-aae79dd2456d",
 								"exec": [
 									"var jsonResponse = JSON.parse(responseBody);",
 									"",
@@ -287,7 +283,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "51e04ec5-e819-48c4-bf1c-b943bc4a0c4e",
 								"exec": [
 									"var jsonResponse = JSON.parse(responseBody);",
 									"",
@@ -338,8 +333,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "OAuth Demo",
@@ -693,8 +687,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "HMAC Auth",
@@ -705,7 +698,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "aa2e503c-2d32-43fb-8dd2-7ad29a605ddf",
 								"exec": [
 									"/*",
 									"var jsonResponse = JSON.parse(responseBody);",
@@ -774,7 +766,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"username\":\"hmac-username\",\n\"secret\":\"secret123\"}"
+							"raw": "{\"username\":\"hmac-user\",\n\"secret\":\"K1ngK0ng\"}"
 						},
 						"url": {
 							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/consumers/{{consumer_hmac-consumer}}/hmac-auth",
@@ -798,7 +790,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2eafa91e-8378-4b5e-a8c9-e03fe6bd8b34",
 								"exec": [
 									"var jsonResponse = JSON.parse(responseBody);",
 									"",
@@ -863,10 +854,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"strip_path\": true,\n\t\"path_handling\": \"v1\",\n\t\"paths\": [\"/hmac-echo\"],\n\t\"protocols\": [\"http\"],\n\t\"name\": \"hmacEcho-route\"\n}"
+							"raw": "{\n\t\"strip_path\": true,\n\t\"paths\": [\"/auth/hmac\"],\n\t\"protocols\": [\"http\", \"https\"],\n\t\"name\": \"auth-hmac\"\n}"
 						},
 						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/services/{{service_hmac-service}}/routes",
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/services/{{service_local_echo-server}}/routes",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -874,7 +865,7 @@
 							"path": [
 								"{{workspace}}",
 								"services",
-								"{{service_hmac-service}}",
+								"{{service_local_echo-server}}",
 								"routes"
 							]
 						}
@@ -887,7 +878,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4308fe2a-26b9-475c-a667-affb5cb8ec9f",
 								"exec": [
 									"var jsonResponse = JSON.parse(responseBody);",
 									"",
@@ -944,7 +934,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3c68af82-25f9-4a9d-8c6a-754722fd58c7",
 								"exec": [
 									"var jsonResponse = JSON.parse(responseBody);",
 									"",
@@ -999,14 +988,13 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "b4928589-789e-45b2-93f1-16d873e2790a",
 								"exec": [
 									"var tsUTC = new Date().toUTCString();",
-									"var credentialsUsername = \"hmac-username\";",
-									"var hmacSecret = \"secret123\";",
+									"var credentialsUsername = \"hmac-user\";",
+									"var hmacSecret = \"K1ngK0ng\";",
 									"var hmacAlgorithm = \"hmac-sha256\"",
-									"var hmacHeaders = [\"date\", \"x-custom\",\"x-other-custom\", \"request-line\"]",
-									"//var hmacHeaders = [\"date\",\"request-line\"]",
+									"//var hmacHeaders = [\"date\", \"x-custom\",\"x-other-custom\", \"request-line\"]",
+									"var hmacHeaders = [\"date\",\"request-line\"]",
 									"",
 									"var hmacMessage = \"\";",
 									"var hmacHeaderString = \"\";",
@@ -1019,7 +1007,8 @@
 									"      hmacMessage = hmacMessage + header.toLowerCase() + \": \" + tsUTC + \"\\n\"",
 									"    }",
 									"    else if (header.toLowerCase() == \"request-line\") {",
-									"      hmacMessage = hmacMessage + pm.request.method + \" /\" + pm.request.url.path[0] + \" HTTP/1.1\\n\"",
+									"      console.log(pm.request.url)",
+									"      hmacMessage = hmacMessage + pm.request.method + \" /\" + pm.request.url.path[0] + \"/\" + pm.request.url.path[1] + \" HTTP/1.1\\n\"",
 									"    }",
 									"    else",
 									"      hmacMessage = hmacMessage + header.toLowerCase() + \": \" + pm.request.headers.get(header) + \"\\n\"",
@@ -1027,6 +1016,7 @@
 									"",
 									"// remove trailing newline",
 									"hmacMessage = hmacMessage.replace(/\\n$/, \"\")",
+									"console.log(hmacMessage)",
 									"",
 									"var hmac = CryptoJS.HmacSHA256(hmacMessage, hmacSecret);",
 									"var hmacBase64String = CryptoJS.enc.Base64.stringify(hmac);",
@@ -1043,7 +1033,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9808663e-76ec-48b2-99c4-740cba4e9f50",
 								"exec": [
 									"pm.collectionVariables.unset(\"hmacAuth\");",
 									"pm.collectionVariables.unset('timestampUTC');"
@@ -1067,29 +1056,31 @@
 							{
 								"key": "X-Custom",
 								"value": "custom123",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							},
 							{
 								"key": "X-Other-Custom",
 								"value": "otherABC",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"url": {
-							"raw": "{{baseURL}}:{{proxyPort}}/hmac-echo",
+							"raw": "{{baseURL}}:{{proxyPort}}/auth/hmac",
 							"host": [
 								"{{baseURL}}"
 							],
 							"port": "{{proxyPort}}",
 							"path": [
-								"hmac-echo"
+								"auth",
+								"hmac"
 							]
 						}
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Serverless",
@@ -1178,8 +1169,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Request Validator",
@@ -1190,7 +1180,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1ac9b769-185b-4c30-a146-c5e79a581c66",
 								"exec": [
 									"var jsonResponse = JSON.parse(responseBody);",
 									"",
@@ -1247,7 +1236,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dffb0c06-80e5-43c1-a7a4-fadfd3d2633a",
 								"exec": [
 									"var jsonResponse = JSON.parse(responseBody);",
 									"",
@@ -1304,7 +1292,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2abad7a3-46be-4518-be9f-14a146f4421c",
 								"exec": [
 									"var jsonResponse = JSON.parse(responseBody);",
 									"",
@@ -1361,7 +1348,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2b72e82e-f993-4ca6-946c-1ef42fbeb07a",
 								"exec": [
 									"var jsonResponse = JSON.parse(responseBody);",
 									"",
@@ -1412,8 +1398,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "File Log",
@@ -1424,7 +1409,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "57653b1d-f175-4b5d-b6ab-7fe4c29575b3",
 								"exec": [
 									"var jsonResponse = JSON.parse(responseBody);",
 									"",
@@ -1481,7 +1465,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "817d0b0f-2ad6-4978-b26f-cc64b1e2ba5a",
 								"exec": [
 									"var jsonResponse = JSON.parse(responseBody);",
 									"",
@@ -1532,8 +1515,67 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
+		},
+		{
+			"name": "Datadog",
+			"item": [
+				{
+					"name": "Add datadog Plugin to Route",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"/*",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"enabled\": true,\n  \"name\": \"datadog\",\n  \"config\": {\n    \"host\": \"localhost\",\n    \"metrics\": [\n      {\n        \"sample_rate\": 1,\n        \"name\": \"status_count\",\n        \"tags\": [\n          \"app:kong\"\n        ],\n        \"stat_type\": \"counter\"\n      }\n    ],\n    \"port\": 8125,\n    \"prefix\": \"kong\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/routes/{{route_LocalEcho}}/plugins",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"routes",
+								"{{route_LocalEcho}}",
+								"plugins"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Add exit-transformer Plugin to Route",
@@ -1541,7 +1583,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "880c20c3-4f8a-4434-99eb-aeab601b669b",
 						"exec": [
 							"var jsonResponse = JSON.parse(responseBody);",
 							"",
@@ -1609,7 +1650,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "9367c209-b869-41f3-838c-af72f37762ab",
 						"exec": [
 							"var jsonResponse = JSON.parse(responseBody);",
 							"",
@@ -1724,7 +1764,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "36edb765-e10c-4d8a-9e15-fdbb7e13ec22",
 						"exec": [
 							"var jsonResponse = JSON.parse(responseBody);",
 							"",
@@ -1780,7 +1819,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "56f992a8-e644-40c3-a5a2-5a5b3d4fdeaa",
 						"exec": [
 							"var jsonResponse = JSON.parse(responseBody);",
 							"",
@@ -1878,7 +1916,6 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "94cf80c5-c0c8-4b8f-85da-ae0db0a22a29",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1888,13 +1925,11 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "b6e9080b-dc92-445e-a057-7e2d1b30b4ee",
 				"type": "text/javascript",
 				"exec": [
 					""
 				]
 			}
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
