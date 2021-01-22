@@ -2399,17 +2399,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"email\":\"stu.roberts+dp2@konghq.com\",\n \"password\":\"password\",\n \"meta\":\"{\\\"full_name\\\":\\\"Developer Two\\\"}\"\n}"
+							"raw": "{\"email\":\"stu+dp@konghq.com\",\n \"password\":\"password\",\n \"meta\":\"{\\\"full_name\\\":\\\"Dev E. Loper\\\"}\"\n}"
 						},
 						"url": {
-							"raw": "{{baseURL}}:{{portalAPIPort}}/{{workspace}}//register",
+							"raw": "{{baseURL}}:{{portalAPIPort}}/{{workspace}}/register",
 							"host": [
 								"{{baseURL}}"
 							],
 							"port": "{{portalAPIPort}}",
 							"path": [
 								"{{workspace}}",
-								"",
 								"register"
 							]
 						}
@@ -2417,7 +2416,7 @@
 					"response": []
 				},
 				{
-					"name": "Get Portal Developers",
+					"name": "Get All Portal Developers",
 					"event": [
 						{
 							"listen": "test",
@@ -2459,6 +2458,43 @@
 					"response": []
 				},
 				{
+					"name": "Get Portal Developer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/developers/19f9c4c8-cf3e-4f08-acf5-d541fc72ec61",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"developers",
+								"19f9c4c8-cf3e-4f08-acf5-d541fc72ec61"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update Developer Portal Account",
 					"request": {
 						"method": "PATCH",
@@ -2476,19 +2512,18 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"type\": 1, \n \"status\": 0,\n \"meta\":\"{\\\"full_name\\\":\\\"\\\"}\"\n}"
+							"raw": "{\"status\": 0}"
 						},
 						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/portal/developers/db04cae6-3c0e-46d5-afeb-8508223b587e",
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/developers/ddfc6e17-ea31-47b0-905e-a4ab3f50971a",
 							"host": [
 								"{{baseURL}}"
 							],
 							"port": "{{adminPort}}",
 							"path": [
 								"{{workspace}}",
-								"portal",
 								"developers",
-								"db04cae6-3c0e-46d5-afeb-8508223b587e"
+								"ddfc6e17-ea31-47b0-905e-a4ab3f50971a"
 							]
 						}
 					},
@@ -2534,6 +2569,51 @@
 								"credentials",
 								"oauth2",
 								"64819670-8002-4800-8656-4fe3a88e28aa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Portal Developer basic-auth creds",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each CH app\",",
+									"jsonResponse.data.forEach(function (pluginDetails) {",
+									"  console.log('Route: ' + pluginDetails.domain);",
+									"  postman.setEnvironmentVariable(\"plugin_\"+pluginDetails.id, pluginDetails.id);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/developers/stu+dp@konghq.com/credentials/basic-auth",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"developers",
+								"stu+dp@konghq.com",
+								"credentials",
+								"basic-auth"
 							]
 						}
 					},
