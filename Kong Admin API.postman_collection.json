@@ -94,6 +94,32 @@
 					"response": []
 				},
 				{
+					"name": "Get Workspace Meta Data",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/workspaces/{{workspace}}/meta",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"workspaces",
+								"{{workspace}}",
+								"meta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get Workspace Entities",
 					"event": [
 						{
@@ -119,8 +145,8 @@
 						"header": [
 							{
 								"key": "Kong-Admin-Token",
-								"value": "{{adminToken}}",
-								"type": "text"
+								"type": "text",
+								"value": "{{adminToken}}"
 							}
 						],
 						"url": {
@@ -134,7 +160,8 @@
 								"{{workspace}}",
 								"entities"
 							]
-						}
+						},
+						"description": "Not available in Kong 2.x"
 					},
 					"response": []
 				},
@@ -2575,7 +2602,7 @@
 					"response": []
 				},
 				{
-					"name": "Get All Portal Developer basic-auth creds",
+					"name": "Get Portal Developer basic-auth creds",
 					"event": [
 						{
 							"listen": "test",
@@ -4358,15 +4385,15 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/{{workspace_default}}/consumers/{{consumer_jwt-consumer}}",
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/consumers/{{consumer_consB}}",
 							"host": [
 								"{{baseURL}}"
 							],
 							"port": "{{adminPort}}",
 							"path": [
-								"{{workspace_default}}",
+								"{{workspace}}",
 								"consumers",
-								"{{consumer_jwt-consumer}}"
+								"{{consumer_consB}}"
 							]
 						}
 					},
@@ -4478,7 +4505,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/consumers/consA/basic-auth",
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/consumers/{{consumer_consB}}/basic-auth",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -4486,8 +4513,58 @@
 							"path": [
 								"{{workspace}}",
 								"consumers",
-								"consA",
+								"{{consumer_consB}}",
 								"basic-auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Consumer Credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/*",
+									"var jsonResponse = JSON.parse(responseBody);",
+									"",
+									"// Create a Postman env variable for each Service",
+									"jsonResponse.data.forEach(function (serviceDetails) {",
+									"  if (postman.getEnvironmentVariable(\"debug\") === \"1\" ){",
+									"    console.log('Service: ' + serviceDetails.domain);",
+									"  }",
+									"  postman.setEnvironmentVariable(\"service_\"+serviceDetails.name, serviceDetails.id);",
+									"})",
+									"",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Kong-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}:{{adminPort}}/{{workspace}}/consumers/{{consumer_consB}}/basic-auth/0599779d-65e8-48ec-85df-c3aae8454521",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{adminPort}}",
+							"path": [
+								"{{workspace}}",
+								"consumers",
+								"{{consumer_consB}}",
+								"basic-auth",
+								"0599779d-65e8-48ec-85df-c3aae8454521"
 							]
 						}
 					},
